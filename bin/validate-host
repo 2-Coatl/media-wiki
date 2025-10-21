@@ -1,0 +1,114 @@
+#!/bin/bash
+# Validate host requirements
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+source "$PROJECT_ROOT/config/00-core.sh"
+
+echo "==> Validating host system requirements"
+
+_errors=0
+
+validate_ram() {
+    local _ram_gb
+    _ram_gb=$(free -g 2>/dev/null | awk '/^Mem:/{print $2}')
+
+    if [[ -z "$_ram_gb" ]]; then
+        echo "[ERROR] Cannot detect RAM"
+        return 1
+    fi
+
+    if [[ $_ram_gb -ge $MIN_RAM_GB ]]; then
+        echo "[OK] RAM: ${_ram_gb}GB"
+        return 0
+    else
+        echo "[ERROR] RAM insufficient: ${_ram_gb}GB (need ${MIN_RAM_GB}GB)"
+        return 1
+    fi
+}
+
+validate_disk() {
+    local _disk_gb
+    _disk_gb=$(df -BG . 2>/dev/null | tail -1 | awk '{print $4}' | tr -d 'G')
+
+    if [[ -z "$_disk_gb" ]]; then
+        echo "[ERROR] Cannot detect disk space"
+        return 1
+    fi
+
+    if [[ $_disk_gb -ge $MIN_DISK_GB ]]; then
+        echo "[OK] Disk: ${_disk_gb}GB available"
+        return 0
+    else
+        echo "[ERROR] Disk insufficient: ${_disk_gb}GB (need ${MIN_DISK_GB}GB)"
+        return 1
+    fi
+}
+
+validate_virtualbox() {
+    if command -v vboxmanage >/dev/null 2>&1; then
+        local _version
+        _version=$(vboxmanage --version 2>/dev/null | cut -d'r' -f1)
+        echo "[OK] VirtualBox: $_version"
+        return 0
+    else
+        echo "[ERROR] VirtualBox not installed"
+        return 1
+    fi
+}
+
+validate_vagrant() {
+    if command -v vagrant >/dev/null 2>&1; then
+        local _version
+        _version=$(vagrant --version 2>/dev/null | awk '{print $2}')
+        echo "[OK] Vagrant: $_version"
+        return 0
+    else
+        echo "[ERROR] Vagrant not installed"
+        return 1
+    fi
+}
+
+validate_cpu() {
+    if grep -qE "vmx|svm" /proc/cpuinfo 2>/dev/null; then
+        echo "[OK] CPU virtualization: enabled"
+        return 0
+    else
+        echo "[WARN] CPU virtualization: not detected"
+        return 0
+    fi
+}
+
+echo ""
+echo "Checking RAM..."
+validate_ram || _errors=$((_errors + 1))
+
+echo ""
+echo "Checking disk space..."
+validate_disk || _errors=$((_errors + 1))
+
+echo ""
+echo "Checking VirtualBox..."
+validate_virtualbox || _errors=$((_errors + 1))
+
+echo ""
+echo "Checking Vagrant..."
+validate_vagrant || _errors=$((_errors + 1))
+
+echo ""
+echo "Checking CPU virtualization..."
+validate_cpu
+
+echo ""
+echo "========================================"
+
+if [[ $_errors -eq 0 ]]; then
+    echo "[OK] All requirements met"
+    exit 0
+else
+    echo "[ERROR] $_errors requirement(s) not met"
+    exit 1
+fi
