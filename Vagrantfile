@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
                         group: "vagrant"
 
     db.vm.provision "shell",
-                    path: "vagrant/provisioners/provision-database.sh",
+                    path: "scripts/provisioners/provision-database.sh",
                     run: "once"
   end
 
@@ -59,7 +59,7 @@ Vagrant.configure("2") do |config|
                          group: "vagrant"
 
     web.vm.provision "shell",
-                     path: "vagrant/provisioners/provision-web-server.sh",
+                     path: "scripts/provisioners/provision-web-server.sh",
                      run: "once"
   end
 
