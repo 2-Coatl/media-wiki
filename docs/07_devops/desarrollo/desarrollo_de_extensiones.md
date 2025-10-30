@@ -3,109 +3,156 @@ id: DOC-DEVOPS-013
 estado: vigente
 propietario: Equipo de Desarrollo
 ultima_actualizacion: 2025-02-21
-relacionados: [DOC-INDEX-001, DOC-DEVOPS-PLAN-001]
+relacionados: [DOC-INDEX-001, DOC-DEVOPS-PLAN-001, DOC-DEVOPS-021]
 ---
-# Desarrollo de Extensiones
+# Desarrollo de extensiones MediaWiki
 
-Marco de trabajo para crear, desplegar y validar extensiones personalizadas de
-MediaWiki dentro del laboratorio. Incluye la plantilla base, scripts de
-automatización, ejemplos completos y validaciones de calidad.
+> Consulta el [índice general](../../README.md) y el [plan maestro de tareas](../plan_tareas_mediawiki.md) para contexto adicional.
 
-## 1. Plantilla de extensión
+## 1. Introducción para nuevos desarrolladores
+
+Bienvenido al laboratorio MediaWiki Production Lab. Este documento resume cómo preparar tu entorno, comprender la arquitectura del monolito modular y contribuir extensiones siguiendo TDD con cobertura mínima del 80%.
+
+## 2. Preparación del entorno
+
+1. Clona el repositorio y crea una rama feature:
+   ```bash
+   git clone https://example.org/mediawiki/media-wiki.git
+   cd media-wiki
+   git checkout -b feat/nueva-extension
+   ```
+2. Instala dependencias de desarrollo:
+   ```bash
+   make dev-setup
+   ```
+3. Levanta Vagrant y sincroniza el workspace:
+   ```bash
+   vagrant up mediawiki-web01
+   ./scripts/development/sync-extensions.sh --watch
+   ```
+4. Exporta variables de entorno para pruebas automatizadas (`MEDIAWIKI_API_URL`, `MEDIAWIKI_ADMIN_USER`, `MEDIAWIKI_ADMIN_PASS`).
+
+## 3. Flujo de trabajo de desarrollo (Red → Green → Refactor)
+
+```mermaid
+flowchart LR
+    Idea --> Red[Test falla]
+    Red --> Green[Código mínimo]
+    Green --> Refactor[Mejora continua]
+    Refactor --> Review[Pull Request]
+    Review --> Deploy[Deploy a Vagrant]
+```
+
+1. Escribe tests primero (`tests/phpunit/`) asegurando que fallen (fase Red).
+2. Implementa la funcionalidad mínima para pasar los tests (Green).
+3. Refactoriza manteniendo cobertura ≥80% y reglas PSR-4.
+4. Ejecuta `./scripts/development/test-extension.sh` antes de abrir PR.
+5. Sigue Conventional Commits (`feat(extensiones): ...`).
+
+## 4. Plantilla de extensión
 
 - **Ubicación**: `development/tools/extension-template-2025/`.
 - **Estructura**:
-  - `extension.json`, `ExtensionName.php`, `README.md`, `LICENSE`,
-    `CHANGELOG.md`, `CODE_OF_CONDUCT.md`.
-  - Directorios `src/` (PSR-4), `resources/` (CSS/JS), `i18n/` (en/es/qqq),
-    `sql/` (definiciones `tables.json`), `tests/phpunit/`, `maintenance/` y
-    configuración `.editorconfig`/`.gitignore`.
+  - `extension.json`, `ExtensionName.php`, `README.md`, `LICENSE`, `CHANGELOG.md`, `CODE_OF_CONDUCT.md`.
+  - Directorios `src/`, `resources/`, `i18n/`, `sql/`, `tests/phpunit/`, `maintenance/`.
 - **Buenas prácticas**:
-  - JavaScript sin dependencias externas ni uso de `localStorage`.
-  - Documentar mensajes i18n y mantener traducciones sincronizadas.
-  - Registrar cambios en `CHANGELOG.md` desde la primera iteración.
+  - Documentar hooks y mensajes i18n con comentarios en español.
+  - Evitar dependencias externas no aprobadas.
+  - Registrar cambios desde la primera iteración en `CHANGELOG.md`.
 
-## 2. Creación automática
+## 5. Arquitectura de extensiones
 
-- **Script**: `scripts/development/create-extension.sh`.
-- **Funciones clave**:
-  - `validate_extension_name` (formato PascalCase, sin duplicados).
-  - `prompt_extension_info` para capturar descripción, autor, licencia, URL.
-  - `copy_template` y `rename_files` adaptando nomenclatura.
-  - `replace_placeholders` para actualizar textos (`ExtensionName`,
-    `extensionname`, descripción, autor).
-  - `initialize_git` para repositorios independientes cuando sea necesario.
-- **Salida**: nueva carpeta en `development/extensions/<ExtensionName>/` lista
-  para edición.
+- Extensiones cargadas como módulos del monolito MediaWiki mediante `wfLoadExtension`.
+- Separación en capas:
+  - **Aplicación**: archivos en `src/` con namespaces PSR-4 (`MediaWiki\Extension\Nombre\`).
+  - **Presentación**: recursos en `resources/` y plantillas Mustache cuando aplique.
+  - **Persistencia**: definiciones `sql/tables.json` y migraciones de mantenimiento.
+- Hooks relevantes: `SkinAfterContent`, `BeforePageDisplay`, `LoadExtensionSchemaUpdates`, `ApiMain::onCheckCanExecute`.
 
-## 3. Despliegue hacia las VMs
+## 6. Estándares de código
 
-- **Script**: `scripts/development/deploy-extension.sh`.
-- **Flujo**:
-  1. `validate_extension_exists` y `validate_extension_structure`.
-  2. `sync_to_vm` (sincronización directa o vía `rsync`).
-  3. `set_permissions` (`chown www-data:www-data`).
-  4. `update_localsettings` con `wfLoadExtension` y respaldo previo.
-  5. `run_update_script` (`php maintenance/update.php`).
-  6. `clear_cache` (`php maintenance/rebuildLocalisationCache.php`).
-  7. `verify_deployment` (`curl` a `Special:Version`).
-- **Herramienta adicional**: `scripts/development/sync-extensions.sh` para
-  sincronización continua usando `inotifywait`.
+| Área | Estándar |
+| --- | --- |
+| PHP | PSR-12, type hints estrictos, comentarios en español |
+| JavaScript | ES2020, módulos sin dependencias globales |
+| CSS | BEM y variables CSS para theming |
+| Commits | Conventional Commits, mensajes en español |
+| Revisiones | Dos aprobaciones cruzadas, checklist de seguridad |
 
-## 4. Ejemplo EmployeeDirectory
+## 7. Workflow de automatización
 
-- Generado con el script de creación (`EmployeeDirectory`).
-- **Componentes**:
-  - Tabla `employee_directory` definida en `sql/tables.json`.
-  - `SpecialEmployeeDirectory.php` con permisos dedicados y renderizado de lista.
-  - JavaScript (`resources/js/ext.employeeDirectory.js`) con búsqueda en tiempo
-    real (filtrado en memoria).
-  - CSS (`resources/css/ext.employeeDirectory.css`) con diseño responsivo.
-  - Script de mantenimiento `maintenance/importEmployees.php` para cargar datos
-    desde CSV.
-  - Tests unitarios en `tests/phpunit/unit/` para validar hooks y consultas.
-- **Validación**: desplegar, ejecutar `php maintenance/update.php`, importar
-  datos, acceder a `Special:EmployeeDirectory` y confirmar funcionamiento.
+- **Creación**: `scripts/development/create-extension.sh` valida nombre, clona plantilla y ajusta placeholders.
+- **Deploy**: `scripts/development/deploy-extension.sh` sincroniza archivos, actualiza `LocalSettings.php`, ejecuta `php maintenance/update.php` y limpia caché.
+- **Sync continuo**: `scripts/development/sync-extensions.sh --watch` usa `inotifywait`.
 
-## 5. Ejemplo ProjectTracker con API
+## 8. Testing
 
-- Extensión creada via script (`ProjectTracker`).
-- **API**:
-  - `src/Api/ApiProjectTracker.php` con acciones `list`, `get`, `create`,
-    `update`, `delete`.
-  - Validación estricta de parámetros y respuestas JSON con códigos de error.
-  - Control de permisos y autenticación MediaWiki.
-- **Interfaz web**:
-  - `SpecialProjectTracker.php` consumiendo la API mediante `fetch`.
-  - Formularios para CRUD y manejo de errores en la UI.
-- **Pruebas**:
-  - Curl/postman para cada endpoint.
-  - Tests PHP en `tests/phpunit/` cubriendo flujos y seguridad.
+1. Ejecuta el script principal:
+   ```bash
+   ./scripts/development/test-extension.sh NombreExtension
+   ```
+2. Cobertura mínima 80% con PHPUnit (`tests/phpunit/unit` y `integration`).
+3. Validaciones automáticas:
+   - Lint (`php -l`, `eslint`).
+   - Estilo (`phpcs --standard=MediaWiki`).
+   - Integridad (`composer validate`, `jsonlint`, `i18n-checker`).
+4. Pruebas manuales: usa `tests/functional/test-mediawiki.sh` para confirmar integración.
 
-## 6. Herramientas de testing
+## 9. APIs disponibles
 
-- **Script**: `scripts/development/test-extension.sh`.
-- **Cobertura**:
-  - Configuración de entorno (`setup_test_environment`).
-  - `run_unit_tests` y `run_integration_tests` con PHPUnit.
-  - Revisiones de sintaxis (`php -l`), estilo (`phpcs --standard=MediaWiki`) e
-    integridad (`validate_extension_json`, `validate_i18n`).
-  - Generación de reportes (HTML o consola).
-- **Complemento**: `scripts/development/validate-extension.sh` para ganchos
-  pre-commit.
-- **Requisito**: cobertura mínima del 80% alineada al lineamiento de TDD.
+- **MediaWiki Action API**: `api.php?action=query`, `action=login`, `action=edit`.
+- **REST API**: endpoints `/rest.php/core/v0/page/...` para integraciones modernas.
+- **APIs personalizadas**: crear clases en `src/Api/` extendiendo `ApiBase`, registrar en `extension.json`.
+- **Ejemplo**: `ProjectTracker` expone `action=projecttracker&list=projects` con filtros por estado.
 
-## 7. Validación integral del flujo
+## 10. Ejemplos de código
 
-- `scripts/validation/validate-group-j.sh` debe:
-  - Verificar la existencia e integridad de la plantilla.
-  - Probar los scripts de creación, despliegue y testing.
-  - Confirmar que `EmployeeDirectory` y `ProjectTracker` aparecen en
-    `Special:Version` tras el despliegue.
-  - Validar la sincronización de archivos y ejecución de pruebas automatizadas.
-  - Emitir un reporte final con hallazgos y recomendaciones.
+### 10.1 Hook `BeforePageDisplay`
+```php
+<?php
+use MediaWiki\Output\OutputPage;
+use Skin;
 
-## Referencias
+return static function( OutputPage $out, Skin $skin ): void {
+    $out->addModules( [ 'ext.EmployeeDirectory.styles' ] );
+};
+```
+
+### 10.2 Cliente Fetch en JS
+```javascript
+async function crearProyecto(datos) {
+  const response = await fetch('/w/api.php?action=projecttracker&format=json', {
+    method: 'POST',
+    credentials: 'include',
+    body: new URLSearchParams({ action: 'projecttracker', format: 'json', subaction: 'create', ...datos })
+  });
+  return response.json();
+}
+```
+
+## 11. Debugging y troubleshooting
+
+- Habilita modo debug temporal en `LocalSettings.php` (`$wgShowExceptionDetails = true;`) solo en entornos de prueba.
+- Revisa `logs/` en `mediawiki-web01` (`/var/log/mediawiki/extension-Nombre.log`).
+- Usa `maintenance/showJobs.php` para diagnosticar colas.
+- Captura tráfico API con `mitmproxy` o Postman Collection (`docs/07_devops/postman_validacion.md`).
+
+## 12. Recursos adicionales
+
+- [Hardening y seguridad integral](../seguridad/hardening_y_seguridad.md)
+- [Guía de instalación](../instalacion/guia_instalacion_mediawiki.md)
+- [Guía de operaciones](../../05_operaciones/manual_operaciones_mediawiki.md)
+- [ADR plantillas](../../01_gobernanza/plantillas.md)
+
+## 13. Checklist antes de merge
+
+- [ ] Tests unitarios y de integración en verde.
+- [ ] Cobertura ≥80% reportada en `tests/reports/coverage/index.html`.
+- [ ] Revisión de seguridad aplicada (hooks, permisos, filtros de entrada).
+- [ ] Documentación actualizada (`README.md` de la extensión, changelog).
+- [ ] Scripts de despliegue verificados (`deploy-extension.sh`).
+
+## 14. Referencias
 
 - [Índice de documentación](../../README.md)
 - [Plan maestro de tareas](../plan_tareas_mediawiki.md)
