@@ -78,7 +78,8 @@ secure_mariadb() {
 
     log_info "Running mysql_secure_installation equivalent..."
 
-    mysql -u root << EOF
+    local _secure_sql
+    read -r -d '' _secure_sql <<EOF || true
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
 DELETE FROM mysql.user WHERE User='';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
@@ -86,6 +87,11 @@ DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
 FLUSH PRIVILEGES;
 EOF
+
+    if ! mysql -u root -p"${DB_ROOT_PASSWORD}" --execute "$_secure_sql"; then
+        log_info "Root sin contraseña detectado, reintentando sin autenticación previa"
+        mysql -u root --execute "$_secure_sql"
+    fi
 
     log_success "MariaDB secured"
 }
