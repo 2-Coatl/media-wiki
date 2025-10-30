@@ -7,13 +7,17 @@ relacionados: []
 ---
 ## Panorama
 Carpetas numeradas para visión, gobernanza, requisitos, arquitectura, QA y DevOps.
-Usa 00-vision-y-alcance para estrategia y glosario.
-01-gobernanza guarda plantillas, lineamientos y acuerdos transversales.
-02-requisitos contiene trazabilidad, catálogo de reglas (`reglas-de-negocio/`) y casos de uso (`casos-de-uso/`).
-03-arquitectura consolida ADR numerados en [`adrs/`](03-arquitectura/adrs/README.md), diagramas C4 y contratos de integración.
-05-operaciones conserva bitácoras tácticas y acuerdos de soporte.
-06-qa documenta estrategia de validación, métricas y casos de prueba.
-07-devops centraliza guías, runbooks y automatización: consulta la [guía de entorno Vagrant](07-devops/entorno_vagrant.md), la [validación con Postman](07-devops/postman_validacion.md) y las [utilidades auxiliares con Podman](07-devops/podman_utilidades_auxiliares.md).
-Consulta el [plan maestro de tareas](07-devops/plan-tareas-mediawiki.md) para la ejecución integral del roadmap.
+
+## Convenciones generales
+- Todos los nombres de carpetas y archivos usan `snake_case` para evitar enlaces rotos y facilitar la navegación.
+
+Usa 00_vision_y_alcance para estrategia y glosario.
+01_gobernanza guarda plantillas, lineamientos y acuerdos transversales.
+02_requisitos contiene trazabilidad, catálogo de reglas (`reglas_de_negocio/`) y casos de uso (`casos_de_uso/`).
+03_arquitectura consolida ADR numerados en [`adrs/`](03_arquitectura/adrs/README.md), diagramas C4 y contratos de integración.
+05_operaciones conserva bitácoras tácticas y acuerdos de soporte.
+06_qa documenta estrategia de validación, métricas y casos de prueba.
+07_devops centraliza guías, runbooks y automatización: consulta la [guía de entorno Vagrant](07_devops/entorno_vagrant.md), la [validación con Postman](07_devops/postman_validacion.md), las [utilidades auxiliares con Podman](07_devops/podman_utilidades_auxiliares.md) y la [guía operativa de Bats](07_devops/bats_pruebas_automatizadas.md).
+Consulta el [plan maestro de tareas](07_devops/plan_tareas_mediawiki.md) para la ejecución integral del roadmap.
 Falta documentar arquitectura técnica, planes QA detallados y contratos API.
 Cada doc nuevo debe enlazar de vuelta a este índice e incluir front-matter mínimo.
