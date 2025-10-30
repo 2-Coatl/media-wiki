@@ -2,7 +2,7 @@
 id: DOC-INDEX-001
 estado: vigente
 propietario: Equipo de Arquitectura
-ultima_actualizacion: 2025-02-17
+ultima_actualizacion: 2025-02-21
 relacionados: []
 ---
 ## Panorama
@@ -13,7 +13,7 @@ Usa 00-vision-y-alcance para estrategia y glosario.
 03-arquitectura consolida ADR numerados en [`adrs/`](03-arquitectura/adrs/README.md), diagramas C4 y contratos de integración.
 05-operaciones conserva bitácoras tácticas y acuerdos de soporte.
 06-qa documenta estrategia de validación, métricas y casos de prueba.
-07-devops centraliza guías, runbooks y automatización (consulta la [guía de entorno Vagrant y Postman](07-devops/entorno-vagrant-postman.md)).
+07-devops centraliza guías, runbooks y automatización: consulta la [guía de entorno Vagrant](07-devops/entorno_vagrant.md), la [validación con Postman](07-devops/postman_validacion.md) y las [utilidades auxiliares con Podman](07-devops/podman_utilidades_auxiliares.md).
 Consulta el [plan maestro de tareas](07-devops/plan-tareas-mediawiki.md) para la ejecución integral del roadmap.
 Falta documentar arquitectura técnica, planes QA detallados y contratos API.
 Cada doc nuevo debe enlazar de vuelta a este índice e incluir front-matter mínimo.
