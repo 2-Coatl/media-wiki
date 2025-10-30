@@ -1,20 +1,59 @@
 #!/bin/bash
-# Install and configure Apache web server
+# Instala y configura Apache con soporte para modo de simulación y pruebas
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-source "$PROJECT_ROOT/infrastructure/utils/logging.sh"
 source "$PROJECT_ROOT/infrastructure/utils/core.sh"
 source "$PROJECT_ROOT/config/00-core.sh"
 
-init_logging
-check_root
+if [[ -n "${INSTALL_APACHE_HELPERS:-}" ]]; then
+    # Permite inyectar dependencias durante pruebas
+    source "$INSTALL_APACHE_HELPERS"
+fi
+
+DRY_RUN=0
+APACHE_CONF_FILE="${APACHE_CONF_FILE:-/etc/apache2/apache2.conf}"
+
+usage() {
+    cat <<'EOF'
+Uso: install-apache.sh [opciones]
+
+Opciones:
+  --dry-run    Simula los pasos sin aplicar cambios.
+  -h, --help   Muestra esta ayuda.
+EOF
+}
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --dry-run)
+                DRY_RUN=1
+                shift
+                ;;
+            -h|--help)
+                usage
+                exit 0
+                ;;
+            *)
+                log_error "Opción desconocida: $1"
+                usage
+                exit 1
+                ;;
+        esac
+    done
+}
 
 install_apache() {
     log_step "Installing Apache $APACHE_VERSION"
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        log_info "[DRY-RUN] Se omite la instalación de paquetes apache2"
+        return 0
+    fi
 
     if package_installed apache2; then
         log_info "Apache already installed"
@@ -30,6 +69,11 @@ install_apache() {
 
 enable_apache_modules() {
     log_step "Enabling Apache modules"
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        log_info "[DRY-RUN] Se omite la habilitación de módulos"
+        return 0
+    fi
 
     local _modules="rewrite ssl headers expires deflate"
     local _module
@@ -49,7 +93,12 @@ enable_apache_modules() {
 configure_apache() {
     log_step "Configuring Apache"
 
-    local _conf="/etc/apache2/apache2.conf"
+    if [[ $DRY_RUN -eq 1 ]]; then
+        log_info "[DRY-RUN] Se omite la edición de apache2.conf"
+        return 0
+    fi
+
+    local _conf="$APACHE_CONF_FILE"
 
     if file_contains "$_conf" "ServerTokens Prod"; then
         log_info "Apache already configured"
@@ -78,6 +127,11 @@ configure_apache() {
 start_apache() {
     log_step "Starting Apache service"
 
+    if [[ $DRY_RUN -eq 1 ]]; then
+        log_info "[DRY-RUN] Se omite la interacción con systemctl"
+        return 0
+    fi
+
     if service_active apache2; then
         log_info "Apache already running"
         systemctl reload apache2
@@ -94,6 +148,11 @@ start_apache() {
 
 validate_apache() {
     log_step "Validating Apache installation"
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        log_info "[DRY-RUN] Validación simulada sin comprobar servicios"
+        return 0
+    fi
 
     local _errors=0
 
@@ -112,7 +171,8 @@ validate_apache() {
     fi
 
     if command_exists apache2; then
-        local _version=$(apache2 -v | head -1 | awk '{print $3}' | cut -d'/' -f2)
+        local _version
+        _version=$(apache2 -v | head -1 | awk '{print $3}' | cut -d'/' -f2)
         log_success "Apache version: $_version"
     else
         log_error "Apache command not found"
@@ -129,6 +189,16 @@ validate_apache() {
 }
 
 main() {
+    parse_args "$@"
+
+    init_logging
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        log_warn "[DRY-RUN] Ejecución sin privilegios de superusuario"
+    else
+        check_root
+    fi
+
     log_step "Apache Installation"
 
     install_apache
@@ -137,7 +207,11 @@ main() {
     start_apache
     validate_apache
 
-    log_success "Apache installation complete"
+    if [[ $DRY_RUN -eq 1 ]]; then
+        log_success "[DRY-RUN] Instalación de Apache completada"
+    else
+        log_success "Apache installation complete"
+    fi
 }
 
-main
+main "$@"

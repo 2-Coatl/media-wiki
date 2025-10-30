@@ -1,5 +1,5 @@
 #!/bin/bash
-# Validate host requirements
+# Validación de requisitos del host con soporte para pruebas
 
 set -e
 
@@ -8,13 +8,61 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 source "$PROJECT_ROOT/config/00-core.sh"
 
-echo "==> Validating host system requirements"
+FREE_CMD="${VALIDATE_HOST_FREE_CMD:-free}"
+DF_CMD="${VALIDATE_HOST_DF_CMD:-df}"
+VBOXMANAGE_CMD="${VALIDATE_HOST_VBOXMANAGE_CMD:-vboxmanage}"
+VAGRANT_CMD="${VALIDATE_HOST_VAGRANT_CMD:-vagrant}"
+CPUINFO_FILE="${VALIDATE_HOST_CPUINFO_FILE:-/proc/cpuinfo}"
 
-_errors=0
+DRY_RUN=0
+
+usage() {
+    cat <<'EOF'
+Uso: validate-host [opciones]
+
+Opciones:
+  --dry-run    Muestra los chequeos sin ejecutar comandos del sistema.
+  -h, --help   Muestra esta ayuda.
+EOF
+}
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --dry-run)
+                DRY_RUN=1
+                shift
+                ;;
+            -h|--help)
+                usage
+                exit 0
+                ;;
+            *)
+                echo "[ERROR] Opción desconocida: $1"
+                usage
+                exit 1
+                ;;
+        esac
+    done
+}
+
+echo_header() {
+    echo "==> Validating host system requirements"
+}
 
 validate_ram() {
-    local _ram_gb
-    _ram_gb=$(free -g 2>/dev/null | awk '/^Mem:/{print $2}')
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Se verificaría la memoria RAM mínima (${MIN_RAM_GB}GB)"
+        return 0
+    fi
+
+    local _ram_output _ram_gb
+    if ! _ram_output="$($FREE_CMD -g 2>/dev/null)"; then
+        echo "[ERROR] Cannot detect RAM"
+        return 1
+    fi
+
+    _ram_gb=$(awk '/^Mem:/{print $2}' <<< "$_ram_output")
 
     if [[ -z "$_ram_gb" ]]; then
         echo "[ERROR] Cannot detect RAM"
@@ -31,8 +79,18 @@ validate_ram() {
 }
 
 validate_disk() {
-    local _disk_gb
-    _disk_gb=$(df -BG . 2>/dev/null | tail -1 | awk '{print $4}' | tr -d 'G')
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Se verificaría el espacio libre mínimo (${MIN_DISK_GB}GB)"
+        return 0
+    fi
+
+    local _disk_output _disk_gb
+    if ! _disk_output="$($DF_CMD -BG . 2>/dev/null)"; then
+        echo "[ERROR] Cannot detect disk space"
+        return 1
+    fi
+
+    _disk_gb=$(tail -1 <<< "$_disk_output" | awk '{print $4}' | tr -d 'G')
 
     if [[ -z "$_disk_gb" ]]; then
         echo "[ERROR] Cannot detect disk space"
@@ -49,9 +107,14 @@ validate_disk() {
 }
 
 validate_virtualbox() {
-    if command -v vboxmanage >/dev/null 2>&1; then
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Se comprobaría la instalación de VirtualBox >= ${MIN_VBOX_VERSION}"
+        return 0
+    fi
+
+    if command -v "$VBOXMANAGE_CMD" >/dev/null 2>&1; then
         local _version
-        _version=$(vboxmanage --version 2>/dev/null | cut -d'r' -f1)
+        _version=$("$VBOXMANAGE_CMD" --version 2>/dev/null | cut -d'r' -f1)
         echo "[OK] VirtualBox: $_version"
         return 0
     else
@@ -61,9 +124,14 @@ validate_virtualbox() {
 }
 
 validate_vagrant() {
-    if command -v vagrant >/dev/null 2>&1; then
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Se comprobaría la instalación de Vagrant >= ${MIN_VAGRANT_VERSION}"
+        return 0
+    fi
+
+    if command -v "$VAGRANT_CMD" >/dev/null 2>&1; then
         local _version
-        _version=$(vagrant --version 2>/dev/null | awk '{print $2}')
+        _version=$("$VAGRANT_CMD" --version 2>/dev/null | awk '{print $2}')
         echo "[OK] Vagrant: $_version"
         return 0
     else
@@ -73,7 +141,12 @@ validate_vagrant() {
 }
 
 validate_cpu() {
-    if grep -qE "vmx|svm" /proc/cpuinfo 2>/dev/null; then
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Se verificaría la disponibilidad de virtualización por hardware"
+        return 0
+    fi
+
+    if grep -qE "vmx|svm" "$CPUINFO_FILE" 2>/dev/null; then
         echo "[OK] CPU virtualization: enabled"
         return 0
     else
@@ -82,33 +155,47 @@ validate_cpu() {
     fi
 }
 
-echo ""
-echo "Checking RAM..."
-validate_ram || _errors=$((_errors + 1))
+main() {
+    parse_args "$@"
 
-echo ""
-echo "Checking disk space..."
-validate_disk || _errors=$((_errors + 1))
+    echo_header
 
-echo ""
-echo "Checking VirtualBox..."
-validate_virtualbox || _errors=$((_errors + 1))
+    local _errors=0
 
-echo ""
-echo "Checking Vagrant..."
-validate_vagrant || _errors=$((_errors + 1))
+    echo ""
+    echo "Checking RAM..."
+    validate_ram || _errors=$((_errors + 1))
 
-echo ""
-echo "Checking CPU virtualization..."
-validate_cpu
+    echo ""
+    echo "Checking disk space..."
+    validate_disk || _errors=$((_errors + 1))
 
-echo ""
-echo "========================================"
+    echo ""
+    echo "Checking VirtualBox..."
+    validate_virtualbox || _errors=$((_errors + 1))
 
-if [[ $_errors -eq 0 ]]; then
-    echo "[OK] All requirements met"
-    exit 0
-else
-    echo "[ERROR] $_errors requirement(s) not met"
-    exit 1
-fi
+    echo ""
+    echo "Checking Vagrant..."
+    validate_vagrant || _errors=$((_errors + 1))
+
+    echo ""
+    echo "Checking CPU virtualization..."
+    validate_cpu
+
+    echo ""
+    echo "========================================"
+
+    if [[ $_errors -eq 0 ]]; then
+        if [[ $DRY_RUN -eq 1 ]]; then
+            echo "[DRY-RUN] Validación completada sin ejecutar comprobaciones"
+        else
+            echo "[OK] All requirements met"
+        fi
+        exit 0
+    else
+        echo "[ERROR] $_errors requirement(s) not met"
+        exit 1
+    fi
+}
+
+main "$@"
