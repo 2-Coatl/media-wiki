@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mostrar_ayuda() {
+  cat <<'AYUDA'
+Uso: commit-msg [-h] <archivo_mensaje>
+
+Hook de Git ejecutado para validar el contenido del mensaje de commit.
+
+Opciones:
+  -h    Muestra esta ayuda y termina.
+AYUDA
+}
+
+while getopts ":h" opcion; do
+  case "${opcion}" in
+    h)
+      mostrar_ayuda
+      exit 0
+      ;;
+    ?)
+      echo "Opción desconocida: -${OPTARG}" >&2
+      mostrar_ayuda >&2
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
+if [ "$#" -ne 1 ]; then
+  echo "Error: commit-msg requiere la ruta al archivo del mensaje de commit." >&2
+  mostrar_ayuda >&2
+  exit 1
+fi
+
+archivo_mensaje="$1"
+
+echo "[commit-msg] Validando el mensaje de commit en: ${archivo_mensaje}"
+# TODO: Implementar validación del formato Conventional Commits y otras reglas del proyecto.
+
+exit 0
