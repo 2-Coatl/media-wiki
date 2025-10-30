@@ -2,7 +2,7 @@
 id: DOC-INDEX-002
 estado: borrador
 propietario: Oficina de Documentación
-ultima_actualizacion: 2025-02-21
+ultima_actualizacion: 2025-03-05
 relacionados: [DOC-INDEX-001]
 ---
 # Índice maestro de documentación
@@ -23,6 +23,7 @@ Este índice complementa a [docs/README.md](README.md) y centraliza enlaces clav
 2. **05 Operaciones**
    - [Manual operacional MediaWiki](05_operaciones/manual_operaciones_mediawiki.md)
    - [Notas de operaciones y respaldos](05_operaciones/notas/operaciones_y_respaldos.md)
+   - [Política de respaldos MariaDB](05_operaciones/politicas/politica_respaldo_mariadb.md)
 3. **07 DevOps**
    - [Guía de instalación integral](07_devops/instalacion/guia_instalacion_mediawiki.md)
    - [Referencia de configuración](07_devops/configuracion/referencia_configuracion_mediawiki.md)
@@ -41,6 +42,7 @@ Este índice complementa a [docs/README.md](README.md) y centraliza enlaces clav
 
 | Fecha | Responsable | Cambio |
 | --- | --- | --- |
+| 2025-03-05 | Equipo de Documentación | Añadida política de respaldos MariaDB |
 | 2025-02-21 | Equipo de Documentación | Creación del índice maestro |
 
 ## Próximos pasos

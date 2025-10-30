@@ -2,8 +2,8 @@
 id: DOC-OPS-005
 estado: vigente
 propietario: Oficina de Operaciones
-ultima_actualizacion: 2025-02-21
-relacionados: [DOC-INDEX-001, DOC-DEVOPS-PLAN-001]
+ultima_actualizacion: 2025-03-05
+relacionados: [DOC-INDEX-001, DOC-DEVOPS-PLAN-001, POL-OPS-BACKUP-MARIADB]
 ---
 # Operaciones y Respaldos
 
@@ -13,13 +13,12 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
 
 ## 1. Política de respaldos
 
-- Documento maestro en `backups/policies/backup-policy.md` siguiendo la regla
-  3-2-1 (copias locales, secundarias y offsite documentada).
-- Cobertura mínima: base de datos `wikidb`, archivos de aplicación, imágenes,
-  `LocalSettings.php`, configuraciones de Apache/MySQL y extensiones
+- Documento maestro: `docs/05_operaciones/politicas/politica_respaldo_mariadb.md`.
+- Cobertura mínima: base de datos `mediawiki`, archivos de aplicación, imágenes,
+  `LocalSettings.php`, configuraciones de Apache/MariaDB y extensiones
   personalizadas.
 - Frecuencias sugeridas:
-  - Base de datos: full diario a las 02:00 y diferenciales cada 6 horas.
+  - Base de datos: full cada 6 horas mediante `create_mariadb_backup.sh`.
   - Archivos: full diario a las 03:00 e incrementales cada 12 horas.
   - Configuraciones: semanal.
 - Retención: diarios 7 días, semanales 4 semanas, mensuales 12 meses.
@@ -29,17 +28,21 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
 
 ## 2. Respaldos de base de datos
 
-- **Script**: `scripts/operations/backup-database.sh`.
-- **Flujo sugerido**:
-  1. `check_prerequisites` (verifica `mysqldump`, conectividad y espacio libre).
-  2. `create_backup_directory` bajo `/var/backups/mediawiki/database/YYYY-MM-DD/`.
-  3. `perform_full_backup` con `mysqldump --single-transaction --routines --triggers --events`.
-  4. `calculate_checksum` (`sha256sum`) y almacenamiento en archivo `.sha256`.
-  5. `cleanup_old_backups` aplicando la política de retención.
-  6. Registro de estado en `/var/log/backup-database.log` y notificación opcional.
+- **Script**: `scripts/backups/create_mariadb_backup.sh`.
+- **Flujo implementado**:
+  1. Carga credenciales desde `config/secrets.env`.
+  2. Genera dump con `mysqldump --databases mediawiki` y lo comprime (`.sql.gz`).
+  3. Aplica retención automática (`RETENTION_DAYS`, valor predeterminado 7).
+  4. Valida integridad mediante `gzip -t` y reporta en stdout.
+- **Parámetros**:
+  - `BACKUP_BASE_DIR`: redefine el destino (default: `<repo>/backups`).
+  - `RETENTION_DAYS`: número de días a conservar.
+  - `DB_HOST`: host de MariaDB (default: `localhost`).
+  - `MARIADB_DUMP_BIN`: ruta alternativa al binario `mysqldump`.
 - **Verificación**:
-  - `mysql -e "SHOW TABLES"` tras restauración a un entorno temporal.
-  - `gzip -t` y comparación de checksums.
+  - `gzip -t respaldo.sql.gz`.
+  - `mysql --user wikiuser --password --host ... < respaldo.sql` en entorno de
+    pruebas temporal.
 
 ## 3. Respaldos de archivos
 
@@ -71,8 +74,7 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
 
 - **Script**: `scripts/operations/setup-backup-cron.sh`.
 - **Entradas recomendadas**:
-  - `0 2 * * * /path/backup-database.sh full`.
-  - `0 */6 * * * /path/backup-database.sh incremental`.
+  - `0 */6 * * * /opt/mediawiki/scripts/backups/create_mariadb_backup.sh`.
   - `0 3 * * * /path/backup-mediawiki.sh`.
   - `0 4 * * 0 /path/cleanup-old-backups.sh` (si se utiliza script dedicado).
 - **Validación**: `crontab -l` y revisión de logs en `/var/log/syslog` o
