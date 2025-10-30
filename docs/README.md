@@ -21,3 +21,10 @@ Usa 00_vision_y_alcance para estrategia y glosario.
 Consulta el [plan maestro de tareas](07_devops/plan_tareas_mediawiki.md) para la ejecución integral del roadmap.
 Falta documentar arquitectura técnica, planes QA detallados y contratos API.
 Cada doc nuevo debe enlazar de vuelta a este índice e incluir front-matter mínimo.
+## Próximas etapas
+
+- Preparar `docs/08_testing_integral/testing_integral.md` para consolidar el plan de pruebas end-to-end y resultados del bloque K.
+- Documentar `docs/09_documentacion/documentacion_centralizada.md` con lineamientos editoriales y trazabilidad del bloque L.
+- Diseñar `docs/10_integracion_final/integracion_final.md` que describa el cierre operativo y entregables del bloque M.
+
+Cada nuevo archivo debe respetar el front-matter descrito arriba, enlazar a este índice y mantener la convención de nombres en `snake_case`.
