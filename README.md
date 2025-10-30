@@ -50,6 +50,15 @@ cd mediawiki-production-lab
 bash scripts/deploy/deploy-vagrant.sh
 ```
 
+## Registro de configuración inicial
+
+La primera ejecución de `bin/setup-project` en un entorno limpio arrojó las siguientes advertencias:
+
+- `bash: bin/setup-project: Permission denied`: el script carecía de permisos de ejecución. Se resolvió con `chmod +x bin/setup-project`.
+- `[WARN] generate-secrets script not found or not executable`: el generador de secretos no tenía permisos. Se habilitó `bin/generate-secrets` con `chmod +x`.
+
+Tras aplicar estos ajustes el comando se ejecuta sin advertencias y produce `config/secrets.env` automáticamente.
+
 ## Project Structure
 
 ```
@@ -66,6 +75,23 @@ mediawiki-production-lab/
 ├── vagrant/                   Vagrant provisioners
 └── docs/                      Documentation
 ```
+
+## Guía de carpetas y puntos de extensión
+
+- **bin/**: scripts de orquestación ejecutables. Aquí viven `setup-project`, `validate-host`, `setup-trunk-based` y `generate-secrets`. Puedes añadir nuevas utilidades siguiendo el mismo patrón Bash y habilitándolas con `chmod +x`.
+- **config/**: parámetros sensibles y plantillas de configuración. `config/secrets.env` se genera con `bin/generate-secrets`; extiende esta carpeta creando archivos `*.env` adicionales o agregando parámetros consumidos por los scripts de instalación.
+- **docs/**: documentación funcional y técnica. Usa este directorio para ADRs, guías operativas y diagramas.
+- **infrastructure/**: componentes reutilizables para aprovisionamiento (por ejemplo utilidades de Ansible o Terraform). Añade nuevos módulos sin mezclar lógica de scripts.
+- **scripts/**: núcleo del aprovisionamiento dividido por etapas. Cada subcarpeta es un punto de extensión natural:
+  - `installation/`: instala dependencias del sistema; agrega nuevos paquetes creando scripts `install-<componente>.sh`.
+  - `security/`: endurecimiento de servicios; extiende con scripts para nuevas políticas de seguridad.
+  - `migration/`: tareas de migración y mantenimiento de datos.
+  - `validation/`: verificaciones posteriores a la instalación; añade validaciones adicionales reutilizando utilidades compartidas.
+  - `git-hooks/` y `quality/`: pipelines de control de calidad y hooks de Git; puedes incorporar nuevas comprobaciones o herramientas de linting.
+  - `deploy/`: automatización de despliegue y rollback; crea scripts que encapsulen nuevos flujos de entrega.
+- **tests/**: pruebas automatizadas separadas en `unit/`, `integration/` y `smoke/`. Coloca aquí nuevos casos siguiendo el enfoque TDD y asegurando ≥80 % de cobertura.
+- **vagrant/**: definiciones y provisioners específicos de Vagrant. Extiende la topología añadiendo provisioners o configuraciones por VM.
+- **backups/**: destino para respaldos generados; excluido de Git por diseño.
 
 ## Configuration
 
