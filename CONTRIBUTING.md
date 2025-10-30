@@ -18,7 +18,7 @@ Adoptamos el [Contributor Covenant](https://www.contributor-covenant.org/version
 1. **Fork** del repositorio y crea rama feature (`feat/<scope>-<descripcion>`).
 2. Asegura que exista un issue vinculado o ADR cuando aplique.
 3. Escribe tests antes del código (TDD: Red → Green → Refactor).
-4. Ejecuta scripts locales (`./scripts/run-all-tests.sh`).
+4. Ejecuta scripts locales (`./infrastructure/run-all-tests.sh`).
 5. Actualiza documentación y enlaza al índice (`docs/INDEX.md`).
 6. Abre Pull Request detallando cambios y resultados de pruebas.
 
@@ -36,7 +36,7 @@ docs(ops): actualizar runbook de incidentes
 
 - PHP: PSR-12 + type hints.
 - JavaScript: ESLint con configuración del proyecto.
-- Cobertura mínima 80% (`./scripts/development/test-extension.sh`).
+- Cobertura mínima 80% (`./infrastructure/development/test-extension.sh`).
 - Ejecuta `phpcs`, `phpunit`, `eslint`, `markdownlint` antes de enviar.
 
 ## Revisiones y merge

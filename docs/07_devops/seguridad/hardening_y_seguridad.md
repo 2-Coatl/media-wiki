@@ -47,7 +47,7 @@ MediaWiki Production Lab mantiene una postura de seguridad defensiva basada en s
 
 ### MariaDB
 - Usuarios con `GRANT` mínimos.
-- Rotación trimestral de contraseñas vía `scripts/security/rotate-db-passwords.sh`.
+- Rotación trimestral de contraseñas vía `infrastructure/security/rotate-db-passwords.sh`.
 
 ### MediaWiki
 - Extensiones revisadas en security review checklist.
@@ -68,7 +68,7 @@ MediaWiki Production Lab mantiene una postura de seguridad defensiva basada en s
    - Identifica alcance.
    - Contén (bloqueo IP/servicio).
    - Erradica y aplica parches.
-   - Recupera y valida con `scripts/validation/final-validation.sh`.
+   - Recupera y valida con `infrastructure/validation/final-validation.sh`.
    - Documenta lecciones aprendidas en `docs/05_operaciones/notas/`.
 
 ## 7. Cumplimiento y auditoría
@@ -87,7 +87,7 @@ MediaWiki Production Lab mantiene una postura de seguridad defensiva basada en s
 
 ## 9. Gestión de vulnerabilidades
 
-1. Ejecutar `scripts/security/vulnerability-scan.sh` semanalmente.
+1. Ejecutar `infrastructure/security/vulnerability-scan.sh` semanalmente.
 2. Clasificar findings por severidad (CVSS >=7 es crítico).
 3. Crear issue en backlog y asignar responsable.
 4. Validar remediación con re-scan.

@@ -19,7 +19,7 @@ personalizados, alertas, logging centralizado y dashboards complementarios.
   - `nagios-services.cfg` incluyendo HTTP, HTTPS, SSH, PING, discos, carga y
     procesos monitoreados mediante NRPE.
   - `nagios-contacts.cfg` con el contacto `admin` y grupos de notificación.
-- **Automatización**: `scripts/configuration/configure-nagios-monitoring.sh`
+- **Automatización**: `infrastructure/configuration/configure-nagios-monitoring.sh`
   copia los archivos, edita `nagios.cfg` para incluirlos, instala NRPE y plugins
   necesarios en cada VM y ejecuta `nagios -v` antes de reiniciar el servicio.
 - **Pasos clave**:
@@ -64,7 +64,7 @@ personalizados, alertas, logging centralizado y dashboards complementarios.
 
 ## 4. Logging centralizado
 
-- **Scripts**: `scripts/configuration/enhance-logging.sh` consolida ajustes en
+- **Scripts**: `infrastructure/configuration/enhance-logging.sh` consolida ajustes en
   Apache, MediaWiki, MariaDB y PHP para enriquecer logs y garantizar su
   reenvío hacia `mgmt01` mediante `rsyslog`.
 - **Acciones**:
@@ -91,7 +91,7 @@ personalizados, alertas, logging centralizado y dashboards complementarios.
 
 ## 6. Validación integral
 
-- Ejecutar `scripts/validation/validate-group-h.sh` para comprobar:
+- Ejecutar `infrastructure/validation/validate-group-h.sh` para comprobar:
   - Estado del servicio Nagios y ausencia de errores de configuración.
   - Disponibilidad de NRPE en las VMs.
   - Flujo de logs hacia `mgmt01` y rotación correcta.

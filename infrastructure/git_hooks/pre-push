@@ -15,7 +15,7 @@ Opciones:
 
 Variables de entorno:
   QUALITY_PIPELINE_CMD      Comando alternativo que reemplaza la ejecución
-                            por defecto de scripts/quality/ejecutar_validaciones.sh.
+                            por defecto de infrastructure/quality/ejecutar_validaciones.sh.
   PRE_PUSH_MIN_COVERAGE     Umbral mínimo por defecto cuando no se pasa la
                             opción --min-coverage.
 AYUDA

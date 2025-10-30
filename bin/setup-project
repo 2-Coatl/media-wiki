@@ -50,13 +50,13 @@ create_directories() {
     mkdir -p "$PROJECT_ROOT/bin"
     mkdir -p "$PROJECT_ROOT/config"
     mkdir -p "$PROJECT_ROOT/infrastructure/utils"
-    mkdir -p "$PROJECT_ROOT/scripts/installation"
-    mkdir -p "$PROJECT_ROOT/scripts/security"
-    mkdir -p "$PROJECT_ROOT/scripts/migration"
-    mkdir -p "$PROJECT_ROOT/scripts/validation"
-    mkdir -p "$PROJECT_ROOT/scripts/git-hooks"
-    mkdir -p "$PROJECT_ROOT/scripts/quality"
-    mkdir -p "$PROJECT_ROOT/scripts/deploy"
+    mkdir -p "$PROJECT_ROOT/infrastructure/installation"
+    mkdir -p "$PROJECT_ROOT/infrastructure/security"
+    mkdir -p "$PROJECT_ROOT/infrastructure/migration"
+    mkdir -p "$PROJECT_ROOT/infrastructure/validation"
+    mkdir -p "$PROJECT_ROOT/infrastructure/git_hooks"
+    mkdir -p "$PROJECT_ROOT/infrastructure/quality"
+    mkdir -p "$PROJECT_ROOT/infrastructure/deploy"
     mkdir -p "$PROJECT_ROOT/vagrant/provisioners"
     mkdir -p "$PROJECT_ROOT/tests/unit"
     mkdir -p "$PROJECT_ROOT/tests/integration"
@@ -107,12 +107,12 @@ make_executable() {
         return 0
     fi
 
-    echo "Making scripts executable..."
+    echo "Making infrastructure scripts executable..."
 
     find "$PROJECT_ROOT/bin" -type f -exec chmod +x {} \; 2>/dev/null || true
-    find "$PROJECT_ROOT/scripts" -type f -name "*.sh" -exec chmod +x {} \; 2>/dev/null || true
+    find "$PROJECT_ROOT/infrastructure" -type f -name "*.sh" -exec chmod +x {} \; 2>/dev/null || true
 
-    echo "[OK] Scripts are executable"
+    echo "[OK] Infrastructure scripts are executable"
 }
 
 create_gitignore() {
@@ -190,7 +190,7 @@ Production-ready MediaWiki deployment with Vagrant.
 ./bin/validate-host
 ./bin/setup-project
 ./bin/setup-trunk-based
-bash scripts/deploy/deploy-vagrant.sh
+bash infrastructure/deploy/deploy-vagrant.sh
 ```
 
 ## Requirements

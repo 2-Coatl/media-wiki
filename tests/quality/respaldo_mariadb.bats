@@ -66,7 +66,7 @@ teardown() {
 }
 
 @test "create-mariadb-backup: genera un respaldo comprimido" {
-  run "$REPO_ROOT/scripts/backups/create_mariadb_backup.sh"
+  run "$REPO_ROOT/infrastructure/backups/create_mariadb_backup.sh"
 
   [ "$status" -eq 0 ]
   [[ "$output" == *"Respaldo completado"* ]]
@@ -85,7 +85,7 @@ teardown() {
 
   export RETENTION_DAYS=1
 
-  run "$REPO_ROOT/scripts/backups/create_mariadb_backup.sh"
+  run "$REPO_ROOT/infrastructure/backups/create_mariadb_backup.sh"
 
   [ "$status" -eq 0 ]
   [[ ! -f "$antiguo" ]]

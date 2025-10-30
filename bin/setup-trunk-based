@@ -20,8 +20,8 @@ echo ""
 cd "$PROJECT_ROOT"
 
 echo -e "${_blue}[1/5] Installing Git hooks${_nc}"
-if [[ -f "scripts/git-hooks/install-hooks.sh" ]]; then
-    bash scripts/git-hooks/install-hooks.sh
+if [[ -f "infrastructure/git_hooks/install-hooks.sh" ]]; then
+    bash infrastructure/git_hooks/install-hooks.sh
     echo -e "${_green}Git hooks installed${_nc}"
 else
     echo -e "${_yellow}Git hooks script not found${_nc}"
@@ -100,12 +100,12 @@ echo -e "${_green}  SETUP COMPLETE${_nc}"
 echo "======================================"
 echo ""
 echo "Next steps:"
-echo "  1. Edit scripts"
+echo "  1. Edit infrastructure scripts"
 echo "  2. Commit: git commit -m 'feat: ...'"
 echo "  3. Push: git push origin main"
-echo "  4. Deploy: bash scripts/deploy/deploy-vagrant.sh"
+echo "  4. Deploy: bash infrastructure/deploy/deploy-vagrant.sh"
 echo ""
 echo "Manual commands:"
-echo "  Quality:  bash scripts/quality/run-quality.sh"
-echo "  Snapshot: bash scripts/deploy/snapshot-create.sh"
+echo "  Quality:  bash infrastructure/quality/run-quality.sh"
+echo "  Snapshot: bash infrastructure/deploy/snapshot-create.sh"
 echo ""

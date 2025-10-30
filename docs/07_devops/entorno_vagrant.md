@@ -34,7 +34,7 @@ configuraciones antes de ejecutar pruebas funcionales o actividades de soporte.
 - `mediawiki-mgmt01`: estación opcional para herramientas administrativas.
 
 ### Scripts y artefactos de apoyo
-- Scripts de validación bajo `scripts/validation/` para comprobar conectividad y
+- Scripts de validación bajo `infrastructure/validation/` para comprobar conectividad y
   dependencias entre máquinas.
 - Plantillas de configuración compartidas dentro de `config/vagrant/`.
 
@@ -46,7 +46,7 @@ configuraciones antes de ejecutar pruebas funcionales o actividades de soporte.
 3. Levanta el servidor web con `vagrant up mediawiki-web01`.
 4. (Opcional) Provisiona la estación de gestión con
    `vagrant up mediawiki-mgmt01` cuando esté disponible.
-5. Valida la red interna con `scripts/validation/validate-network.sh`.
+5. Valida la red interna con `infrastructure/validation/validate-network.sh`.
 6. Documenta cualquier desviación o error encontrado en los runbooks
    correspondientes.
 

@@ -36,7 +36,7 @@ tests/
   calidad/
     ejecutar_validaciones.bats
   ...
-scripts/
+infrastructure/
   quality/
     ejecutar_validaciones.sh
 ```
@@ -77,7 +77,7 @@ misma estructura.
      load 'test_helper/bats-assert/load'
 
      DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )"
-     PATH="$DIR/../../scripts:$PATH"
+    PATH="$DIR/../../infrastructure:$PATH"
    }
 
    @test "puedo ejecutar el script" {
@@ -88,7 +88,7 @@ misma estructura.
 
 2. Ejecutar la suite con `tests/vendor/bats-core/bin/bats tests/calidad/mi_script.bats`
    y verificar el fallo inicial (archivo inexistente).
-3. Implementar el script correspondiente bajo `scripts/` y repetir la ejecución
+3. Implementar el script correspondiente bajo `infrastructure/` y repetir la ejecución
    hasta obtener un resultado verde.
 
 ## 5. Gestión de rutas y variables
@@ -96,7 +96,7 @@ misma estructura.
 - `BATS_TEST_FILENAME` es la referencia canónica al archivo `.bats` actual; debe
   usarse para resolver rutas absolutas y evitar dependencias del directorio de
   trabajo.
-- Agregar la carpeta `scripts/` al `PATH` dentro de `setup()` permite invocar los
+- Agregar la carpeta `infrastructure/` al `PATH` dentro de `setup()` permite invocar los
   ejecutables sin prefijos relativos (`run mi_comando`).
 - Utilizar variables de entorno en `setup()` facilita inyectar stubs o comandos
   alternativos durante la ejecución de las pruebas.
@@ -147,7 +147,7 @@ misma estructura.
 - Ejecutar las suites mediante `bin/test-scripts.sh`, que encapsula la ruta al
   vendor de Bats.
 - Para cobertura, utilizar `bin/coverage-scripts.sh`, el cual invoca
-  `scripts/quality/bash-coverage.sh` tras las pruebas.
+  `infrastructure/quality/bash-coverage.sh` tras las pruebas.
 - Publicar los reportes en `reports/coverage/scripts/` y verificar que el
   porcentaje cumpla con el umbral definido (≥ 80 %).
 

@@ -10,21 +10,21 @@ relacionados: [ADR-2024-001]
 ## `bin/setup-project`
 
 - **Estructura de directorios obligatoria:**
-  - Crea o valida la existencia de `bin/`, `config/`, `infrastructure/utils/`, `scripts/` con subdirectorios `installation/`, `security/`, `migration/`, `validation/`, `git-hooks/`, `quality/`, `deploy/`, además de `vagrant/provisioners/`, `tests/{unit,integration,smoke}/`, `docs/` y `backups/`.
+- Crea o valida la existencia de `bin/`, `config/`, `infrastructure/utils/`, `infrastructure/` con subdirectorios `installation/`, `security/`, `migration/`, `validation/`, `git_hooks/`, `quality/`, `deploy/`, además de `vagrant/provisioners/`, `tests/{unit,integration,smoke}/`, `docs/` y `backups/`.
   - Asume que los comandos tienen permisos para crear carpetas en la raíz del proyecto.
 - **Archivos generados o verificados:**
   - `.gitignore` con reglas para secretos, Vagrant, MediaWiki, backups, IDEs, OS y temporales.
   - `README.md` con guía de inicio rápido si no existe.
   - `config/secrets.env`, potencialmente recreado mediante `bin/generate-secrets`.
 - **Permisos:**
-  - Aplica `chmod +x` a todos los archivos en `bin/` y scripts `.sh` en `scripts/`.
+  - Aplica `chmod +x` a todos los archivos en `bin/` y scripts `.sh` en `infrastructure/`.
 - **Dependencias internas:**
   - Depende de `bin/generate-secrets` para rellenar secretos si está disponible y es ejecutable.
 
 ## `bin/setup-trunk-based`
 
 - **Archivos esperados/creados:**
-  - Instala hooks ejecutando `scripts/git-hooks/install-hooks.sh` si existe.
+- Instala hooks ejecutando `infrastructure/git_hooks/install-hooks.sh` si existe.
   - Crea `.editorconfig` y `.shellcheckrc` con reglas predefinidas cuando no están presentes.
 - **Dependencias externas:**
   - Requiere `git`, `vagrant`, `shellcheck` y `shfmt`; en caso de ausencia muestra los comandos de instalación sugeridos.
@@ -57,6 +57,6 @@ relacionados: [ADR-2024-001]
 
 ## Referencias adicionales
 
-- El `README.md` describe la estructura esperada del proyecto (`wiki/`, `bin/`, `config/`, `scripts/`, `vagrant/`, `docs/`) y detalla herramientas requeridas (VirtualBox, Vagrant, Git) alineadas con las verificaciones de los scripts.
+- El `README.md` describe la estructura esperada del proyecto (`wiki/`, `bin/`, `config/`, `infrastructure/`, `vagrant/`, `docs/`) y detalla herramientas requeridas (VirtualBox, Vagrant, Git) alineadas con las verificaciones de los scripts.
 - Los comentarios en `bin/` refuerzan que la arquitectura es un despliegue de MediaWiki endurecido y con flujo de trunk-based development.
 

@@ -28,7 +28,7 @@ Bienvenido al laboratorio MediaWiki Production Lab. Este documento resume cómo 
 3. Levanta Vagrant y sincroniza el workspace:
    ```bash
    vagrant up mediawiki-web01
-   ./scripts/development/sync-extensions.sh --watch
+   ./infrastructure/development/sync-extensions.sh --watch
    ```
 4. Exporta variables de entorno para pruebas automatizadas (`MEDIAWIKI_API_URL`, `MEDIAWIKI_ADMIN_USER`, `MEDIAWIKI_ADMIN_PASS`).
 
@@ -46,7 +46,7 @@ flowchart LR
 1. Escribe tests primero (`tests/phpunit/`) asegurando que fallen (fase Red).
 2. Implementa la funcionalidad mínima para pasar los tests (Green).
 3. Refactoriza manteniendo cobertura ≥80% y reglas PSR-4.
-4. Ejecuta `./scripts/development/test-extension.sh` antes de abrir PR.
+4. Ejecuta `./infrastructure/development/test-extension.sh` antes de abrir PR.
 5. Sigue Conventional Commits (`feat(extensiones): ...`).
 
 ## 4. Plantilla de extensión
@@ -81,15 +81,15 @@ flowchart LR
 
 ## 7. Workflow de automatización
 
-- **Creación**: `scripts/development/create-extension.sh` valida nombre, clona plantilla y ajusta placeholders.
-- **Deploy**: `scripts/development/deploy-extension.sh` sincroniza archivos, actualiza `LocalSettings.php`, ejecuta `php maintenance/update.php` y limpia caché.
-- **Sync continuo**: `scripts/development/sync-extensions.sh --watch` usa `inotifywait`.
+- **Creación**: `infrastructure/development/create-extension.sh` valida nombre, clona plantilla y ajusta placeholders.
+- **Deploy**: `infrastructure/development/deploy-extension.sh` sincroniza archivos, actualiza `LocalSettings.php`, ejecuta `php maintenance/update.php` y limpia caché.
+- **Sync continuo**: `infrastructure/development/sync-extensions.sh --watch` usa `inotifywait`.
 
 ## 8. Testing
 
 1. Ejecuta el script principal:
    ```bash
-   ./scripts/development/test-extension.sh NombreExtension
+   ./infrastructure/development/test-extension.sh NombreExtension
    ```
 2. Cobertura mínima 80% con PHPUnit (`tests/phpunit/unit` y `integration`).
 3. Validaciones automáticas:

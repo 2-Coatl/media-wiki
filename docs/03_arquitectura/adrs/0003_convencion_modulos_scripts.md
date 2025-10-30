@@ -15,7 +15,7 @@ Aceptada
 
 ## Contexto
 
-Los directorios de `scripts/` concentran tareas operativas críticas (despliegue, migraciones, seguridad y
+Los directorios de `infrastructure/` concentran tareas operativas críticas (despliegue, migraciones, seguridad y
 validaciones de calidad). Cada script evolucionó de forma independiente, mezclando responsabilidades,
 nombres de funciones genéricos y flujos de inicialización duplicados. La ausencia de una convención única
 provoca:
@@ -30,13 +30,13 @@ provoca:
 Adoptar una convención modular inspirada en la estructura de `infrastructure/utils` descrita en el ADR 0001,
 extendida a todos los scripts Bash:
 
-1. Crear el directorio `scripts/modules` para almacenar utilidades compartidas por dominio (`logging`,
+1. Crear el directorio `infrastructure/modules` para almacenar utilidades compartidas por dominio (`logging`,
    `filesystem`, `network`, `security`).
 2. Prefijar todas las funciones exportadas con `mw_<dominio>_` para evitar colisiones (`mw_logging_info`,
    `mw_security_hardening`).
-3. Exponer un loader único `scripts/modules/loader.sh` responsable de inicializar variables de entorno,
+3. Exponer un loader único `infrastructure/modules/loader.sh` responsable de inicializar variables de entorno,
    verificar dependencias y cargar módulos en el orden correcto.
-4. Obligar a que cualquier script ejecutable (`scripts/**/foo.sh`) consuma utilidades mediante `source
+4. Obligar a que cualquier script ejecutable (`infrastructure/**/foo.sh`) consuma utilidades mediante `source
    "$(dirname "$0")/../modules/loader.sh"` o path relativo equivalente.
 5. Documentar contratos de entrada/salida en la cabecera de cada módulo e incluir ejemplos de uso y escenarios
    de prueba asociados.

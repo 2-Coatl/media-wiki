@@ -87,7 +87,7 @@ establecer_estado_inactivo_y_enmascarado() {
   local servicio="telnet.service"
   establecer_estado_activo_y_habilitado "$servicio"
 
-  run scripts/security/enforce-service-disabled.sh "$servicio"
+  run infrastructure/security/enforce-service-disabled.sh "$servicio"
 
   [ "$status" -eq 0 ]
   [ ! -f "$SYSTEMCTL_STATE_DIR/${servicio}.active" ]
@@ -105,7 +105,7 @@ establecer_estado_inactivo_y_enmascarado() {
   local servicio="rlogin.service"
   establecer_estado_inactivo_y_enmascarado "$servicio"
 
-  run scripts/security/enforce-service-disabled.sh "$servicio"
+  run infrastructure/security/enforce-service-disabled.sh "$servicio"
 
   [ "$status" -eq 0 ]
   [ ! -f "$SYSTEMCTL_STATE_DIR/${servicio}.active" ]
@@ -117,6 +117,6 @@ establecer_estado_inactivo_y_enmascarado() {
 }
 
 @test "falla cuando no se proporciona el nombre del servicio" {
-  run scripts/security/enforce-service-disabled.sh
+  run infrastructure/security/enforce-service-disabled.sh
   [ "$status" -ne 0 ]
 }

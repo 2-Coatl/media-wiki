@@ -28,7 +28,7 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
 
 ## 2. Respaldos de base de datos
 
-- **Script**: `scripts/backups/create_mariadb_backup.sh`.
+- **Script**: `infrastructure/backups/create_mariadb_backup.sh`.
 - **Flujo implementado**:
   1. Carga credenciales desde `config/secrets.env`.
   2. Genera dump con `mysqldump --databases mediawiki` y lo comprime (`.sql.gz`).
@@ -46,7 +46,7 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
 
 ## 3. Respaldos de archivos
 
-- **Script**: `scripts/operations/backup-mediawiki.sh`.
+- **Script**: `infrastructure/operations/backup-mediawiki.sh`.
 - **Consideraciones**:
   - Crear `/var/backups/mediawiki/files/` con subcarpetas diarias.
   - Incluir `images/`, `extensions/`, `LocalSettings.php` y exclusiones (`cache/`, `.git`).
@@ -58,8 +58,8 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
 
 ## 4. Procedimientos de restauración
 
-- **Scripts**: `scripts/operations/restore-database.sh` y
-  `scripts/operations/restore-mediawiki.sh`.
+- **Scripts**: `infrastructure/operations/restore-database.sh` y
+  `infrastructure/operations/restore-mediawiki.sh`.
 - **Buenas prácticas**:
   - Listar respaldos disponibles (`list_available_backups`) mostrando fecha/tamaño.
   - Validar integridad (`verify_backup_integrity`) antes de aplicar cambios.
@@ -72,9 +72,9 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
 
 ## 5. Automatización con cron
 
-- **Script**: `scripts/operations/setup-backup-cron.sh`.
+- **Script**: `infrastructure/operations/setup-backup-cron.sh`.
 - **Entradas recomendadas**:
-  - `0 */6 * * * /opt/mediawiki/scripts/backups/create_mariadb_backup.sh`.
+  - `0 */6 * * * /opt/mediawiki/infrastructure/backups/create_mariadb_backup.sh`.
   - `0 3 * * * /path/backup-mediawiki.sh`.
   - `0 4 * * 0 /path/cleanup-old-backups.sh` (si se utiliza script dedicado).
 - **Validación**: `crontab -l` y revisión de logs en `/var/log/syslog` o
@@ -82,7 +82,7 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
 
 ## 6. Health checks y mantenimiento
 
-- **Script**: `scripts/operations/health-check.sh`.
+- **Script**: `infrastructure/operations/health-check.sh`.
 - **Cobertura**:
   - `df -h` con alertas >80%.
   - Estado de servicios (`systemctl status apache2`, `mariadb`).
@@ -93,12 +93,12 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
   - Chequeo de actualizaciones (`apt list --upgradable`).
   - Confirmación de respaldos recientes (timestamp <24h).
   - Reporte consolidado en `/var/log/health-check.log`.
-- **Mantenimiento**: `scripts/operations/maintenance-tasks.sh` para limpieza de
+- **Mantenimiento**: `infrastructure/operations/maintenance-tasks.sh` para limpieza de
   cache, optimización de tablas y purga de temporales.
 
 ## 7. Validación integral
 
-- Ejecutar `scripts/validation/validate-group-i.sh` para corroborar:
+- Ejecutar `infrastructure/validation/validate-group-i.sh` para corroborar:
   - Existencia del documento de políticas y directorios de respaldo.
   - Generación exitosa de respaldos de base de datos y archivos (incluidos
     checksums).

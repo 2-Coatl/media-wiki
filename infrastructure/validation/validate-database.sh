@@ -184,7 +184,7 @@ elif [[ $_errors -eq 0 ]] && [[ $_warnings -gt 0 ]]; then
     echo ""
     echo "If migration not run yet:"
     echo "  vagrant ssh $VM_WEB"
-    echo "  sudo bash /vagrant/scripts/migration/migrate-to-mariadb.sh"
+    echo "  sudo bash /vagrant/infrastructure/migration/migrate-to-mariadb.sh"
     echo ""
     exit 0
 else

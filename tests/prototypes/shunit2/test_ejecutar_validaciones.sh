@@ -2,10 +2,10 @@
 # Pruebas rápidas con shunit2 (stub) para validar compatibilidad con scripts existentes.
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 PROYECTO_DIR=$(cd -- "${SCRIPT_DIR}/../../.." && pwd)
-SCRIPT_OBJETIVO="${PROYECTO_DIR}/scripts/quality/ejecutar_validaciones.sh"
+SCRIPT_OBJETIVO="${PROYECTO_DIR}/infrastructure/quality/ejecutar_validaciones.sh"
 
 oneTimeSetUp() {
-  export PATH="${PROYECTO_DIR}/scripts/quality:${PATH}"
+  export PATH="${PROYECTO_DIR}/infrastructure/quality:${PATH}"
 }
 
 setUp() {

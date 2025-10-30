@@ -26,7 +26,7 @@ git clone https://example.org/mediawiki/media-wiki.git
 cd media-wiki
 cp config/variables.ejemplo .env
 vagrant up
-./scripts/run-all-tests.sh
+./infrastructure/run-all-tests.sh
 ```
 
 Acceso principal: https://192.168.1.100 (acepta certificados generados por Certbot).
@@ -58,13 +58,13 @@ La documentación se organiza en `docs/` (carpetas numeradas). Accede al [índic
 1. Sigue la guía [CONTRIBUTING.md](CONTRIBUTING.md).
 2. Trabaja en ramas feature con Conventional Commits.
 3. Escribe tests antes del código (Red → Green → Refactor).
-4. Ejecuta `./scripts/development/test-extension.sh` y `./scripts/run-all-tests.sh` antes de abrir PR.
+4. Ejecuta `./infrastructure/development/test-extension.sh` y `./infrastructure/run-all-tests.sh` antes de abrir PR.
 5. Genera documentación asociada y enlázala al índice.
 
 ## Troubleshooting rápido
 
 - `vagrant status` para validar estado de VMs.
-- `scripts/operations/health-check.sh` para revisar servicios críticos.
+- `infrastructure/operations/health-check.sh` para revisar servicios críticos.
 - `tests/security/test-hardening.sh` para verificar controles.
 - Consulta [runbooks](docs/05_operaciones/manual_operaciones_mediawiki.md#6-runbooks-de-incidentes) ante incidentes.
 

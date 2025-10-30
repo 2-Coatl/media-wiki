@@ -80,9 +80,9 @@ relacionados: [DOC-INDEX-001, DOC-DEVOPS-PLAN-001]
 ## 6. Checklist post-instalación
 
 - [ ] Actualizar contraseñas por defecto de admin y usuarios técnicos.
-- [ ] Configurar backups automáticos (`scripts/operations/configurar_backups.sh`).
+- [ ] Configurar backups automáticos (`infrastructure/operations/configurar_backups.sh`).
 - [ ] Registrar las VMs en el inventario de activos.
-- [ ] Ejecutar `./scripts/run-all-tests.sh` para validar la instalación.
+- [ ] Ejecutar `./infrastructure/run-all-tests.sh` para validar la instalación.
 
 ## 7. Apéndice: salidas esperadas
 

@@ -16,7 +16,7 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 - **Metodología:** Iterativo e incremental con énfasis en TDD.
 - **Commits:** formato Conventional Commits.
 - **Documentación:** cada decisión relevante en ADR (directorio `docs/03_arquitectura/adrs/`).
-- **Validaciones:** scripts en `scripts/validation/` y pruebas Bats/ PHPUnit según el artefacto.
+- **Validaciones:** scripts en `infrastructure/validation/` y pruebas Bats/ PHPUnit según el artefacto.
 - **Snapshots:** capturar puntos de control de Vagrant tras cada grupo mayor.
 - **Arquitectura:** mantener un **monolito modular**; queda descartado adoptar Kubernetes u orquestadores
   equivalentes. Evitar “interfaces gordas” descomponiendo responsabilidades siguiendo el principio de
@@ -28,10 +28,10 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 
 - [ ] Inicializar repositorio Git, ramas `main` y `develop`, y configuración de usuario.
 - [ ] Crear README, LICENSE (GPL-2.0-or-later), `.gitignore`, `.editorconfig` y hooks básicos.
-- [ ] Generar estructura de directorios (`bin/`, `config/`, `docs/`, `scripts/`, `tests/`, `vagrant/`).
+- [ ] Generar estructura de directorios (`bin/`, `config/`, `docs/`, `infrastructure/`, `tests/`, `vagrant/`).
 - [ ] Definir variables globales (`config/variables.sh`) con comentarios y `readonly`.
 - [ ] Publicar documentación base (`docs/00_vision_y_alcance`, `docs/01_gobernanza`, etc.).
-- [ ] Implementar `scripts/validation/validate-phase-a.sh` con chequeos de estructura y documentación.
+- [ ] Implementar `infrastructure/validation/validate-phase-a.sh` con chequeos de estructura y documentación.
 - [ ] Registrar tag `group-a-complete` tras validación exitosa.
 
 ## Grupo B – Sistema de utilidades
@@ -40,7 +40,7 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 - [ ] Añadir `logging.sh`, `validation.sh`, `service.sh`, `network.sh`, `database.sh` con pruebas unitarias Bats.
 - [ ] Configurar logs centralizados (`/var/log/mediawiki-setup.log`).
 - [ ] Documentar uso en `docs/06_qa/utilities.md`.
-- [ ] Crear `scripts/validation/validate-group-b.sh` y suite `tests/unit/test-all-utils.bats`.
+- [ ] Crear `infrastructure/validation/validate-group-b.sh` y suite `tests/unit/test-all-utils.bats`.
 - [ ] Emitir tag `group-b-complete` tras 100 % de pruebas verdes.
 
 ## Grupo C – Infraestructura Vagrant
@@ -48,15 +48,15 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 - [ ] Redactar `Vagrantfile` para web y db (y futura VM de monitoreo) con redes privadas y bridged.
 - [ ] Escribir provisioners base y específicos en `vagrant/provisioners/` usando utilidades del Grupo B.
 - [ ] Levantar VMs con `vagrant up` y verificar `hostname`, `/etc/hosts` y directorios clave.
-- [ ] Desarrollar `scripts/validation/validate-network.sh` y `validate-group-c.sh`.
+- [ ] Desarrollar `infrastructure/validation/validate-network.sh` y `validate-group-c.sh`.
 - [ ] Documentar infraestructura en `docs/02_requisitos` y `docs/03_arquitectura`.
 - [ ] Crear snapshot `baseline` y tag `group-c-complete`.
 
 ## Grupo D – Instalación de software base
 
-- [ ] Automatizar instalación de PHP, Apache y MariaDB (scripts en `scripts/installation/`).
+- [ ] Automatizar instalación de PHP, Apache y MariaDB (scripts en `infrastructure/installation/`).
 - [ ] Ajustar configuraciones (`php.ini`, módulos Apache, `mariadb.conf.d`).
-- [ ] Implementar `scripts/validation/validate-{php,apache,mariadb}.sh` y pruebas de integración.
+- [ ] Implementar `infrastructure/validation/validate-{php,apache,mariadb}.sh` y pruebas de integración.
 - [ ] Desplegar monitoreo base (Nagios) y logging central (rsyslog) opcional o preparar host dedicado.
 - [ ] Configurar clientes rsyslog y validar flujo de logs.
 - [ ] Documentar en `docs/05_operaciones` y etiquetar `group-d-complete`; snapshot `post-software-installation`.
@@ -68,13 +68,13 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 - [ ] Configurar VirtualHost de Apache (`config/apache/mediawiki-vhost.conf`, script de despliegue).
 - [ ] Ejecutar instalador web, almacenar `LocalSettings.php` en `config/mediawiki/` y aplicar hardening.
 - [ ] Correr scripts post-instalación (`maintenance/update.php`, cron de `runJobs.php`, habilitar extensiones básicas).
-- [ ] Validar con `scripts/validation/validate-group-e.sh`, pruebas funcionales y documentar en `docs/04_mediawiki_installation.md`.
+- [ ] Validar con `infrastructure/validation/validate-group-e.sh`, pruebas funcionales y documentar en `docs/04_mediawiki_installation.md`.
 - [ ] Crear snapshot `post-mediawiki-installation` y tag `group-e-complete`.
 
 ## Grupo F – Configuración de servicios
 
 - [ ] Afinar Apache (HTTP/2 opcional, `mpm_prefork`), PHP (opcache) y MariaDB (buffers, usuarios adicionales).
-- [ ] Automatizar orquestación en `scripts/configuration/` y `scripts/deploy/desplegar.sh`.
+- [ ] Automatizar orquestación en `infrastructure/configuration/` y `infrastructure/deploy/desplegar.sh`.
 - [ ] Configurar tareas programadas (jobs MediaWiki, limpieza de logs, backups rápidos).
 - [ ] Documentar runbooks de despliegue y rollback en `docs/07_devops/runbooks/`.
 - [ ] Validar cada servicio tras aplicar cambios y registrar resultados.
@@ -97,7 +97,7 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 ## Grupo I – Operaciones y backups
 
 - [ ] Definir política de backups (BD, `LocalSettings.php`, `images/`) con retenciones y encriptación.
-- [ ] Implementar scripts de respaldo y restauración en `scripts/operations/`.
+- [ ] Implementar scripts de respaldo y restauración en `infrastructure/operations/`.
 - [ ] Documentar runbooks de DRP, RTO/RPO y ejercicios de recuperación.
 - [ ] Automatizar pruebas de restauración periódicas.
 
@@ -124,7 +124,7 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 
 ## Grupo M – Integración final
 
-- [ ] Ejecutar despliegue completo en entorno limpio (`bin/setup-project`, `scripts/deploy/desplegar.sh`).
+- [ ] Ejecutar despliegue completo en entorno limpio (`bin/setup-project`, `infrastructure/deploy/desplegar.sh`).
 - [ ] Correr smoke tests, validaciones de seguridad y monitoreo integrados.
 - [ ] Generar release notes, actualizar CHANGELOG y crear tag final.
 - [ ] Capturar snapshot final y preparar plan de soporte post-lanzamiento.

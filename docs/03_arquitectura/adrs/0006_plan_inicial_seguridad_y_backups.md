@@ -28,7 +28,7 @@ Adoptar un plan inicial de mejoras con los siguientes alcances:
 
 1. **Restringir la exposición de MariaDB**: parametrizar el `bind-address` para que utilice la IP interna (`DB_APP_IP`) y agregar validaciones automatizadas que aseguren que el servicio únicamente escuche en la red interna.
 2. **Corregir la acción de Fail2ban**: sustituir `%(action_mw)s` por una acción soportada (por ejemplo `%(action_mwl)s`) o empaquetar una acción personalizada `action.d/mediawiki.local`, asegurando que Fail2ban inicie correctamente en los servidores web y de base de datos.
-3. **Implementar respaldos automatizados**: crear un módulo `scripts/backups/create-mariadb-backup.sh` que genere dumps con sellos de tiempo, almacene los archivos en `backups/` y aplique políticas de retención y verificación básica de restauración.
+3. **Implementar respaldos automatizados**: crear un módulo `infrastructure/backups/create-mariadb-backup.sh` que genere dumps con sellos de tiempo, almacene los archivos en `backups/` y aplique políticas de retención y verificación básica de restauración.
 
 El plan deberá seguir la metodología TDD del proyecto: cada mejora se desarrollará a través de pruebas automatizadas (Bats) que validen las configuraciones resultantes.
 

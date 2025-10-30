@@ -9,7 +9,7 @@ relacionados: [DOC-INDEX-001, DOC-DEVOPS-PLAN-001]
 
 Esta guía consolida las actividades para fortalecer los servicios de la
 plataforma MediaWiki en el laboratorio de producción. Cada apartado documenta
-artefactos en `config/`, `scripts/` y verificaciones operativas indispensables
+artefactos en `config/`, `infrastructure/` y verificaciones operativas indispensables
 para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 
 ## 1. Apache HTTP Server
@@ -22,7 +22,7 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
     controles con `mod_headers`.
   - `mpm-prefork.conf` para ajustar `StartServers`, `MaxRequestWorkers` y
     `MaxConnectionsPerChild` según la carga objetivo.
-- **Script recomendado**: `scripts/configuration/configure-apache-advanced.sh`.
+- **Script recomendado**: `infrastructure/configuration/configure-apache-advanced.sh`.
   Implementa funciones para respaldar configuraciones (`backup_apache_config`),
   instalar fragmentos (`install_security_headers`, `install_performance_config`),
   endurecer la huella (`disable_server_tokens`, `configure_timeout`) y validar la
@@ -41,7 +41,7 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 - **Archivos**: `config/mysql/performance.cnf`, `config/mysql/security.cnf` y
   `config/mysql/logging.cnf` definen los parámetros de rendimiento, seguridad y
   auditoría.
-- **Script sugerido**: `scripts/configuration/configure-mariadb-advanced.sh`.
+- **Script sugerido**: `infrastructure/configuration/configure-mariadb-advanced.sh`.
   Prioriza un respaldo inicial (`backup_mysql_config`), copia las plantillas,
   crea archivos de log (`create_log_files`) y prepara la rotación semanal en
   `/etc/logrotate.d/mysql`.
@@ -60,10 +60,10 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 
 - **Artefactos**:
   - Directorio `config/ssl/` para almacenar plantillas de certificados.
-  - Script `scripts/security/generate-certificates.sh` que crea claves de 4096
+  - Script `infrastructure/security/generate-certificates.sh` que crea claves de 4096
     bits, CSR y certificados autofirmados en `/etc/ssl/mediawiki/`.
   - VirtualHost `config/apache/ssl-vhost.conf` con TLSv1.2+ y HSTS.
-- **Despliegue automatizado**: `scripts/configuration/configure-ssl.sh` habilita
+- **Despliegue automatizado**: `infrastructure/configuration/configure-ssl.sh` habilita
   `mod_ssl`, copia el VirtualHost, aplica redirección permanente de HTTP a HTTPS
   y actualiza `LocalSettings.php` (`$wgServer`, `$wgForceHTTPS`).
 - **Pruebas**:
@@ -79,12 +79,12 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
   - `database.rules` (MySQL expuesto solo hacia la red de aplicación).
   - `management.rules` (acceso Nagios y Syslog desde rangos permitidos).
 - **Scripts**:
-  - `scripts/security/configure-firewall-web.sh` con UFW (reset, políticas por
+  - `infrastructure/security/configure-firewall-web.sh` con UFW (reset, políticas por
     defecto, reglas para SSH/HTTP/HTTPS y validación `ufw status verbose`).
-  - `scripts/security/configure-firewall-db.sh` usando `iptables` persistentes
+  - `infrastructure/security/configure-firewall-db.sh` usando `iptables` persistentes
     (`iptables-persistent`).
-  - `scripts/security/configure-firewall-mgmt.sh` replicando la lógica de UFW.
-- **Validación transversal**: `scripts/validation/validate-firewall.sh` realiza
+  - `infrastructure/security/configure-firewall-mgmt.sh` replicando la lógica de UFW.
+- **Validación transversal**: `infrastructure/validation/validate-firewall.sh` realiza
   pruebas de conectividad (SSH, HTTP(S), MySQL) y confirma bloqueos desde redes
   no autorizadas (p. ej. `nmap -p 3306 192.168.1.100` desde el host).
 
@@ -95,7 +95,7 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
     `apache-badbots` y jail personalizada de MediaWiki.
   - `config/fail2ban/filters/mediawiki-auth.conf` para patrones de fallos de
     autenticación.
-- **Instalación guiada**: `scripts/security/install-fail2ban.sh` cubre la
+- **Instalación guiada**: `infrastructure/security/install-fail2ban.sh` cubre la
   instalación, respaldos (`backup_fail2ban_config`), copia de jails/filters,
   habilitación de servicio y pruebas de bloqueo (`test_ban`).
 - **Comprobaciones**:
@@ -107,7 +107,7 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 
 - **Procedimiento**:
   - Instalar `libapache2-mod-security2` y habilitar `mod_security2` con
-    `scripts/security/install-modsecurity.sh`.
+    `infrastructure/security/install-modsecurity.sh`.
   - Descargar OWASP CRS en `/etc/modsecurity/`, activar `SecRuleEngine On`,
     configurar `SecAuditLog` y registrar excepciones específicas para MediaWiki.
 - **Pruebas**:
@@ -118,7 +118,7 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 
 ## 7. Validación integral
 
-- Consolidar las comprobaciones con `scripts/validation/validate-group-f.sh`.
+- Consolidar las comprobaciones con `infrastructure/validation/validate-group-f.sh`.
   Este script debe agrupar:
   - Headers de Apache, compresión y ajuste de MPM.
   - Variables de MariaDB y estado del slow query log.

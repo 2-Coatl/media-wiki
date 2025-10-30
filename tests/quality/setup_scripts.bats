@@ -148,7 +148,7 @@ HELPER
 
   export INSTALL_APACHE_HELPERS="$helper"
 
-  run "$REPO_ROOT/scripts/installation/install-apache.sh" --dry-run
+  run "$REPO_ROOT/infrastructure/installation/install-apache.sh" --dry-run
 
   [ "$status" -eq 0 ]
   [[ "$output" == *"[DRY-RUN] Instalación de Apache completada"* ]]
@@ -175,7 +175,7 @@ HELPER
   export APACHE_CONF_FILE="$TMP_WORKDIR/apache2.conf"
   touch "$APACHE_CONF_FILE"
 
-  run "$REPO_ROOT/scripts/installation/install-apache.sh"
+  run "$REPO_ROOT/infrastructure/installation/install-apache.sh"
 
   [ "$status" -eq 1 ]
   [[ "$output" == *"Apache validation failed"* ]]

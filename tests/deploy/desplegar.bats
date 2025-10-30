@@ -39,7 +39,7 @@ SCRIPT
     chmod +x "$stub_dir/$script"
   done
 
-  run "$REPO_ROOT/scripts/deploy/desplegar.sh"
+  run "$REPO_ROOT/infrastructure/deploy/desplegar.sh"
 
   [ "$status" -eq 0 ]
 

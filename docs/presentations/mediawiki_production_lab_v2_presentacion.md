@@ -38,7 +38,7 @@ relacionados: [DOC-INDEX-001, DOC-ARQ-002]
 
 - TDD (Red → Green → Refactor) con cobertura ≥80%.
 - Suites: infraestructura, seguridad, funcional, E2E, performance.
-- Script maestro `scripts/run-all-tests.sh`.
+- Script maestro `infrastructure/run-all-tests.sh`.
 
 ## Slide 6 · Demo plan
 
