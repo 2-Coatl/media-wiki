@@ -1,3 +1,10 @@
+---
+id: ADR-2024-005
+estado: aceptada
+propietario: Equipo de Arquitectura
+ultima_actualizacion: 2025-02-15
+relacionados: [ADR-2024-002, ADR-2024-003, ADR-2024-004]
+---
 # 0005 - Política para registrar ADRs ante cambios relevantes
 
 ## Estado

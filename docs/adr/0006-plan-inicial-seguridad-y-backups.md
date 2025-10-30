@@ -1,3 +1,10 @@
+---
+id: ADR-2024-006
+estado: propuesta
+propietario: Equipo de Infraestructura
+ultima_actualizacion: 2025-02-15
+relacionados: [NOTE-SEG-001, NOTE-SEG-002]
+---
 # 0006. Plan inicial para reforzar seguridad de servicios y respaldos
 
 - **Estado:** Propuesto

@@ -1,3 +1,10 @@
+---
+id: NOTE-INFRA-SETUP
+estado: vigente
+propietario: Equipo de Infraestructura
+ultima_actualizacion: 2025-02-15
+relacionados: [ADR-2024-001]
+---
 # Contratos detectados en scripts de inicialización
 
 ## `bin/setup-project`
