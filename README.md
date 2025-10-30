@@ -134,15 +134,15 @@ DEPLOYMENT_MODE="prod"
 
 ## Architecture Decision Records (ADRs)
 
-La carpeta [`docs/adr/`](docs/adr) reúne los Architecture Decision Records que rigen el proyecto. Consulta cada documento para
+La carpeta [`docs/03-arquitectura/adrs/`](docs/03-arquitectura/adrs) reúne los Architecture Decision Records que rigen el proyecto. Consulta cada documento para
 entender el contexto, la decisión tomada y las implicaciones que debemos mantener en el tiempo:
 
-- [0001 - Estandarizar utilidades de shell](docs/adr/0001-standardizar-utils-shell.md)
-- [0002 - Seleccionar framework de pruebas para Bash](docs/adr/0002-framework-pruebas-bash.md)
-- [0003 - Convención de módulos para scripts Bash](docs/adr/0003-convencion-modulos-scripts.md)
-- [0004 - Estrategia de herramientas de pruebas y cobertura para scripts Bash](docs/adr/0004-estrategia-pruebas-y-cobertura.md)
-- [0005 - Política para registrar ADRs ante cambios relevantes](docs/adr/0005-politica-adrs-cambios-relevantes.md)
-- [0006 - Plan inicial para reforzar seguridad de servicios y respaldos](docs/adr/0006-plan-inicial-seguridad-y-backups.md)
+- [0001 - Estandarizar utilidades de shell](docs/03-arquitectura/adrs/0001-standardizar-utils-shell.md)
+- [0002 - Seleccionar framework de pruebas para Bash](docs/03-arquitectura/adrs/0002-framework-pruebas-bash.md)
+- [0003 - Convención de módulos para scripts Bash](docs/03-arquitectura/adrs/0003-convencion-modulos-scripts.md)
+- [0004 - Estrategia de herramientas de pruebas y cobertura para scripts Bash](docs/03-arquitectura/adrs/0004-estrategia-pruebas-y-cobertura.md)
+- [0005 - Política para registrar ADRs ante cambios relevantes](docs/03-arquitectura/adrs/0005-politica-adrs-cambios-relevantes.md)
+- [0006 - Plan inicial para reforzar seguridad de servicios y respaldos](docs/03-arquitectura/adrs/0006-plan-inicial-seguridad-y-backups.md)
 
 > **Nota para mantenedores:** cuando se agregue un nuevo ADR, actualiza esta sección enlazando el archivo recién creado y
 mantén el orden cronológico ascendente para conservar una navegación coherente.
@@ -172,7 +172,7 @@ git commit -m "docs: update architecture diagram"
 ## Proceso para ADRs
 
 1. **Identificar la necesidad**: antes de modificar la arquitectura o tomar una decisión significativa, crea un issue describiendo el contexto y los objetivos.
-2. **Proponer la ADR**: copia `docs/adr/000-template.md` a un nuevo archivo numerado secuencialmente (`docs/adr/0003-nombre-decision.md`), completa todas las secciones en español y abre un pull request.
+2. **Proponer la ADR**: copia `docs/03-arquitectura/adrs/000-template.md` a un nuevo archivo numerado secuencialmente (`docs/03-arquitectura/adrs/0003-nombre-decision.md`), completa todas las secciones en español y abre un pull request.
 3. **Revisión colaborativa**: al menos una persona distinta al autor debe revisar la ADR, confirmando que el contexto sea claro, que la decisión esté justificada y que las alternativas estén bien documentadas.
 4. **Aprobación y merge**: una vez obtenida la aprobación, actualiza el estado a "Aceptado" en la ADR y fusiona el pull request siguiendo el flujo de trunk-based development.
 5. **Seguimiento**: documenta en la sección de Consecuencias cualquier impacto observado tras la implementación y actualiza el estado si la decisión cambia (por ejemplo, a "Obsoleto" o "Rechazado").

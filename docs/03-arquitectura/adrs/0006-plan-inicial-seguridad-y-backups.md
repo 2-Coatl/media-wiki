@@ -1,3 +1,10 @@
+---
+id: ADR-2024-006
+estado: propuesta
+propietario: Equipo de Infraestructura
+ultima_actualizacion: 2025-02-15
+relacionados: [NOTE-SEG-001, NOTE-SEG-002]
+---
 # 0006. Plan inicial para reforzar seguridad de servicios y respaldos
 
 - **Estado:** Propuesto
@@ -13,7 +20,7 @@ La revisión de los scripts de aprovisionamiento identificó brechas que increme
 - Fail2ban referencia una acción inexistente (`%(action_mw)s`), lo que puede impedir que el servicio bloquee intentos de intrusión.
 - No existe automatización para generar respaldos periódicos a pesar de contar con un directorio reservado para ellos.
 
-Las tres brechas se describen con mayor detalle en `docs/notas/seguridad-brechas.md` y fueron priorizadas por su impacto alto o muy alto.
+Las tres brechas se describen con mayor detalle en `docs/05-operaciones/notas/seguridad-brechas.md` y fueron priorizadas por su impacto alto o muy alto.
 
 ## Decisión
 

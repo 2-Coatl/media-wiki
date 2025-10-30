@@ -1,3 +1,10 @@
+---
+id: ADR-2024-003
+estado: aceptada
+propietario: Equipo de Infraestructura
+ultima_actualizacion: 2025-02-15
+relacionados: [ADR-2024-001]
+---
 # 0003 - Convención de módulos para scripts Bash
 
 ## Estado
@@ -33,7 +40,7 @@ extendida a todos los scripts Bash:
    "$(dirname "$0")/../modules/loader.sh"` o path relativo equivalente.
 5. Documentar contratos de entrada/salida en la cabecera de cada módulo e incluir ejemplos de uso y escenarios
    de prueba asociados.
-6. Registrar nuevos módulos mediante documentación breve en `docs/notas/scripts-modules.md` para mantener el
+6. Registrar nuevos módulos mediante documentación breve en `docs/05-operaciones/notas/scripts-modules.md` para mantener el
    catálogo actualizado.
 
 ## Consecuencias

@@ -1,3 +1,10 @@
+---
+id: ADR-2024-005
+estado: aceptada
+propietario: Equipo de Arquitectura
+ultima_actualizacion: 2025-02-15
+relacionados: [ADR-2024-002, ADR-2024-003, ADR-2024-004]
+---
 # 0005 - Política para registrar ADRs ante cambios relevantes
 
 ## Estado
@@ -19,14 +26,14 @@ seguridad, calidad) es imprescindible contar con un proceso claro para capturar 
 Establecer la siguiente política obligatoria:
 
 1. Todo cambio que afecte la arquitectura, seguridad, herramientas de pruebas, procesos de despliegue o
-   dependencias críticas debe acompañarse de un ADR numerado en `docs/adr/`.
+   dependencias críticas debe acompañarse de un ADR numerado en `docs/03-arquitectura/adrs/`.
 2. El ADR debe describir contexto, alternativas, riesgos y plan de implementación, siguiendo el formato
    utilizado en los registros 0001-0004.
 3. Los cambios no podrán marcarse como listos para revisión hasta que el ADR correspondiente esté en estado
    **Propuesta** o **Aceptada**.
 4. Las revisiones de seguridad (firewalls, hardening, autenticación) requieren un ADR dedicado que documente
    controles, responsables y fecha de vigencia.
-5. Se debe mantener un índice actualizado en `docs/adr/README.md` (o documento equivalente) que liste los ADRs
+5. Se debe mantener un índice actualizado en `docs/03-arquitectura/adrs/README.md` (o documento equivalente) que liste los ADRs
    aprobados para facilitar su consulta.
 
 ## Consecuencias
@@ -41,6 +48,6 @@ Establecer la siguiente política obligatoria:
 
 ## Próximos pasos
 
-1. Crear o actualizar `docs/adr/README.md` con el índice de ADRs existentes.
+1. Crear o actualizar `docs/03-arquitectura/adrs/README.md` con el índice de ADRs existentes.
 2. Incorporar la verificación de ADRs en las listas de comprobación de PR y plantillas de issue.
 3. Capacitar al equipo sobre la estructura esperada y ejemplos de ADR bien documentados.

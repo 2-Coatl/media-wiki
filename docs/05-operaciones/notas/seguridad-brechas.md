@@ -1,3 +1,10 @@
+---
+id: NOTE-SEG-002
+estado: en_revision
+propietario: Equipo de Seguridad
+ultima_actualizacion: 2025-02-15
+relacionados: [NOTE-SEG-001, ADR-2024-006]
+---
 # Brechas de seguridad y continuidad identificadas
 
 Este documento registra las brechas detectadas durante la revisión del despliegue actual de MediaWiki. Cada entrada incluye una estimación cualitativa del impacto y del esfuerzo requerido para corregirla, con el fin de priorizar las mejoras.

@@ -1,3 +1,10 @@
+---
+id: ADR-2024-004
+estado: aceptada
+propietario: Equipo de QA
+ultima_actualizacion: 2025-02-15
+relacionados: [ADR-2024-002]
+---
 # 0004 - Estrategia de herramientas de pruebas y cobertura para scripts Bash
 
 ## Estado
@@ -25,7 +32,7 @@ sea factible.
 3. **Política de aceptación**: Todo cambio en scripts debe acompañarse de una suite Bats y demostrar al menos
    80 % de cobertura por módulo. Las pipelines de CI bloquearán merges cuando la cobertura caiga por debajo del
    umbral definido.
-4. **Mantenimiento**: Documentar en `docs/notas/testing-bash.md` el procedimiento para actualizar la versión
+4. **Mantenimiento**: Documentar en `docs/05-operaciones/notas/testing-bash.md` el procedimiento para actualizar la versión
    vendorizada de `bats-core` y los pasos para reconstruir la imagen de `kcov` cuando exista una nueva liberación.
 
 ## Consecuencias
