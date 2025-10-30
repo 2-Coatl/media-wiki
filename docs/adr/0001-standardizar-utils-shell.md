@@ -20,7 +20,7 @@ Los scripts de aprovisionamiento y soporte dependen de utilidades compartidas ub
 
 ## Decisión
 
-Adoptar un layout modular con prefijos por dominio (`mw_log_*`, `mw_sys_*`, `mw_validate_*`, `mw_io_*`) y un loader centralizado que inicialice logging y resuelva dependencias. La propuesta detallada se documenta en `docs/notas/infrastructure-utils-layout.md`.
+Adoptar un layout modular con prefijos por dominio (`mw_log_*`, `mw_sys_*`, `mw_validate_*`, `mw_io_*`) y un loader centralizado que inicialice logging y resuelva dependencias. La propuesta detallada se documenta en `docs/05-operaciones/notas/infrastructure-utils-layout.md`.
 
 Puntos clave:
 
