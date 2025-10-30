@@ -154,6 +154,14 @@ git commit -m "fix(db): resolve connection timeout"
 git commit -m "docs: update architecture diagram"
 ```
 
+## Proceso para ADRs
+
+1. **Identificar la necesidad**: antes de modificar la arquitectura o tomar una decisión significativa, crea un issue describiendo el contexto y los objetivos.
+2. **Proponer la ADR**: copia `docs/adr/000-template.md` a un nuevo archivo numerado secuencialmente (`docs/adr/0003-nombre-decision.md`), completa todas las secciones en español y abre un pull request.
+3. **Revisión colaborativa**: al menos una persona distinta al autor debe revisar la ADR, confirmando que el contexto sea claro, que la decisión esté justificada y que las alternativas estén bien documentadas.
+4. **Aprobación y merge**: una vez obtenida la aprobación, actualiza el estado a "Aceptado" en la ADR y fusiona el pull request siguiendo el flujo de trunk-based development.
+5. **Seguimiento**: documenta en la sección de Consecuencias cualquier impacto observado tras la implementación y actualiza el estado si la decisión cambia (por ejemplo, a "Obsoleto" o "Rechazado").
+
 ## Common Commands
 
 **Vagrant Operations:**
