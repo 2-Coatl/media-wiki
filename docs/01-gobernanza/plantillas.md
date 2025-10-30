@@ -2,7 +2,7 @@
 id: DOC-PLT-001
 estado: vigente
 propietario: PMO
-ultima_actualizacion: 2025-02-15
+ultima_actualizacion: 2025-02-16
 relacionados: [DOC-INDEX-001]
 ---
 # Plantillas Express
@@ -14,6 +14,7 @@ Centraliza aquí los formatos oficiales para decisiones, requisitos y artefactos
 - [Requisito funcional](plantillas/requisito-template.md)
 - [Caso de uso completo](plantillas/caso-uso-template.md)
 - [Caso de prueba](plantillas/caso-prueba-template.md)
+- [Checklist de verificación](checklists/revision-documentacion.md)
 
 ## Bloques rápidos
 

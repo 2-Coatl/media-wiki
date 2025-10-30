@@ -2,8 +2,8 @@
 id: DOC-ARQ-INDEX-001
 estado: vigente
 propietario: Equipo de Arquitectura
-ultima_actualizacion: 2025-02-15
-relacionados: [DOC-INDEX-001, DOC-PLT-001]
+ultima_actualizacion: 2025-02-16
+relacionados: [DOC-INDEX-001, DOC-PLT-001, DOC-ADR-INDEX-001]
 ---
 # Arquitectura
 
@@ -13,7 +13,7 @@ relacionados: [DOC-INDEX-001, DOC-PLT-001]
 - Inventario de integraciones y contratos API.
 
 ## Cómo navegar
-1. Revisa `adr/` para decisiones históricas.
+1. Revisa `adrs/` para decisiones históricas.
 2. Consulta `c4-contenedor.md` (pendiente) para la vista macro.
 3. Documenta cambios estructurales usando la [plantilla ADR](../01-gobernanza/plantillas/adr-template.md).
 
