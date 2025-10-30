@@ -11,5 +11,8 @@ Este directorio contiene hooks personalizados para automatizar tareas antes y du
 
 - `pre-commit`: valida el estado del repositorio antes de crear un commit.
 - `commit-msg`: valida el mensaje del commit y la metadata asociada.
+- `pre-push`: ejecuta linters, pruebas y verificación de cobertura (≥80 % por defecto)
+  antes de subir cambios al remoto.
 
-Cada hook incluye mensajes de ayuda (`-h`) y TODOs para completar la lógica futura.
+Cada hook incluye mensajes de ayuda (`-h`) y, donde aplica, opciones para ajustar
+los umbrales de validación.
