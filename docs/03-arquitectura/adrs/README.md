@@ -2,7 +2,7 @@
 id: DOC-ADR-INDEX-001
 estado: vigente
 propietario: Equipo de Arquitectura
-ultima_actualizacion: 2025-02-16
+ultima_actualizacion: 2025-02-17
 relacionados: [DOC-ARQ-INDEX-001, DOC-PLT-001]
 ---
 # Índice de ADRs
@@ -25,3 +25,6 @@ relacionados: [DOC-ARQ-INDEX-001, DOC-PLT-001]
 2. Completa todas las secciones antes de solicitar revisión.
 3. Actualiza este índice y el [README de arquitectura](../README.md).
 4. Registra impactos en requisitos o runbooks relacionados.
+
+## Validaciones
+- 2025-02-17 → Inventario con `find docs -type f -name "000*-*.md"` y `find docs -type f -iname "*-adr*.md"`: solo se encontraron archivos dentro de `docs/03-arquitectura/adrs/`.
