@@ -17,6 +17,10 @@ relacionados: [DOC-PLT-001, DOC-TRZ-001]
 2. Documenta cada regla en un archivo `rn-<dominio>-<descripcion>.md` y enlaza los requisitos afectados.
 3. Sincroniza cambios con casos de uso y pruebas a través de la [trazabilidad](../trazabilidad.md).
 
+### Material de apoyo
+- Revisa la [Guía práctica de reglas de negocio](./guia-practica.md) para clasificar hechos, restricciones, activadores, inferencias, cálculos y aprovechar plantillas completas.
+- Utiliza los ejemplos de tablas y matrices incluidos para acelerar la documentación de políticas complejas.
+
 ## Qué falta
 - Registrar RN-LOG-010 (retención de logs 18 meses).
 - Incorporar tabla de segregación de funciones para tesorería.

@@ -17,6 +17,10 @@ relacionados: [DOC-PLT-001, DOC-TRZ-001]
 2. Guarda cada documento con nombre `uc-<dominio>-<descripcion>.md` en esta carpeta.
 3. Actualiza la [matriz de trazabilidad](../trazabilidad.md) al registrar nuevas relaciones.
 
+### Material de apoyo
+- Consulta la [Guía práctica de casos de uso](./guia-practica.md) para criterios de nomenclatura, plantillas completas, checklists y ejemplos.
+- Complementa la especificación con diagramas UML y de actividad siguiendo las recomendaciones de la guía.
+
 ## Qué falta
 - Documentar `UC-PORTAL-001` (registro auto-servicio).
 - Migrar casos heredados desde Confluence.
