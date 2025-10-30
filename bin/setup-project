@@ -1,14 +1,50 @@
 #!/bin/bash
-# Initialize project structure
+# Inicializa la estructura del proyecto con soporte para pruebas
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+DEFAULT_PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+PROJECT_ROOT="${PROJECT_ROOT_OVERRIDE:-$DEFAULT_PROJECT_ROOT}"
 
-echo "==> Setting up project"
+DRY_RUN=0
+
+usage() {
+    cat <<'EOF'
+Uso: setup-project [opciones]
+
+Opciones:
+  --dry-run    Muestra las acciones sin aplicarlas.
+  -h, --help   Muestra esta ayuda.
+EOF
+}
+
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --dry-run)
+                DRY_RUN=1
+                shift
+                ;;
+            -h|--help)
+                usage
+                exit 0
+                ;;
+            *)
+                echo "[ERROR] Opción desconocida: $1"
+                usage
+                exit 1
+                ;;
+        esac
+    done
+}
 
 create_directories() {
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Creación de directorios en $PROJECT_ROOT"
+        return 0
+    fi
+
     echo "Creating directory structure..."
 
     mkdir -p "$PROJECT_ROOT/bin"
@@ -34,9 +70,23 @@ create_directories() {
 generate_secrets() {
     local _secrets="$PROJECT_ROOT/config/secrets.env"
 
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Generación de secrets.env"
+        return 0
+    fi
+
+    if [[ "${SETUP_PROJECT_SKIP_SECRETS:-0}" == "1" ]]; then
+        echo "[INFO] Saltando generación de secretos por configuración"
+        return 0
+    fi
+
     if [[ -f "$_secrets" ]]; then
-        echo "Secrets file already exists"
-        read -p "Regenerate? (y/N): " _confirm
+        if [[ "${SETUP_PROJECT_FORCE_REGENERATE:-0}" == "1" ]]; then
+            _confirm="y"
+        else
+            echo "Secrets file already exists"
+            read -p "Regenerate? (y/N): " _confirm
+        fi
         if [[ "$_confirm" != "y" ]] && [[ "$_confirm" != "Y" ]]; then
             echo "Skipping secrets generation"
             return 0
@@ -52,6 +102,11 @@ generate_secrets() {
 }
 
 make_executable() {
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Ajuste de permisos de ejecución"
+        return 0
+    fi
+
     echo "Making scripts executable..."
 
     find "$PROJECT_ROOT/bin" -type f -exec chmod +x {} \; 2>/dev/null || true
@@ -62,6 +117,11 @@ make_executable() {
 
 create_gitignore() {
     local _gitignore="$PROJECT_ROOT/.gitignore"
+
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Creación de .gitignore"
+        return 0
+    fi
 
     if [[ -f "$_gitignore" ]]; then
         echo "[OK] .gitignore already exists"
@@ -109,6 +169,11 @@ EOF
 create_readme() {
     local _readme="$PROJECT_ROOT/README.md"
 
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Creación de README.md"
+        return 0
+    fi
+
     if [[ -f "$_readme" ]]; then
         echo "[OK] README.md already exists"
         return 0
@@ -144,6 +209,10 @@ EOF
 }
 
 main() {
+    parse_args "$@"
+
+    echo "==> Setting up project"
+
     create_directories
     create_gitignore
     create_readme
@@ -151,13 +220,17 @@ main() {
     make_executable
 
     echo ""
-    echo "[OK] Project setup complete"
-    echo ""
-    echo "Next steps:"
-    echo "  1. Review config/secrets.env"
-    echo "  2. Run: ./bin/validate-host"
-    echo "  3. Run: ./bin/setup-trunk-based"
-    echo ""
+    if [[ $DRY_RUN -eq 1 ]]; then
+        echo "[DRY-RUN] Proyecto configurado (sin cambios aplicados)"
+    else
+        echo "[OK] Project setup complete"
+        echo ""
+        echo "Next steps:"
+        echo "  1. Review config/secrets.env"
+        echo "  2. Run: ./bin/validate-host"
+        echo "  3. Run: ./bin/setup-trunk-based"
+        echo ""
+    fi
 }
 
-main
+main "$@"
