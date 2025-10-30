@@ -1,0 +1,50 @@
+{
+  "info": {
+    "name": "MediaWiki - Smoke",
+    "description": "Colección mínima para validar endpoints públicos del entorno Vagrant de MediaWiki.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "3d52c90c-5f34-4f35-9ed6-7f6df2730abc"
+  },
+  "item": [
+    {
+      "name": "Ping api.php",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api.php?action=query&meta=siteinfo&format=json",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api.php"
+          ],
+          "query": [
+            { "key": "action", "value": "query" },
+            { "key": "meta", "value": "siteinfo" },
+            { "key": "format", "value": "json" }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Página principal",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/wiki/Main_Page",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "wiki",
+            "Main_Page"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
