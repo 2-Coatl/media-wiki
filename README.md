@@ -175,10 +175,47 @@ bash scripts/deploy/rollback.sh <name>   # Rollback to snapshot
 
 **Quality:**
 ```bash
-bash scripts/quality/run-quality.sh      # Full quality pipeline
-bash scripts/quality/lint-all.sh         # ShellCheck linting
-bash scripts/quality/syntax-check.sh     # Syntax validation
+# Ejecuta linters, pruebas y cobertura en una sola pasada
+bash scripts/quality/ejecutar_validaciones.sh --min-coverage 85
+
+# Sobrescribe comandos por defecto (útil en CI/CD)
+QUALITY_TEST_CMD="pytest" \
+QUALITY_COVERAGE_CMD="coverage report --fail-under=90" \
+bash scripts/quality/ejecutar_validaciones.sh
 ```
+
+El script `scripts/quality/ejecutar_validaciones.sh` expone las siguientes
+variables para personalizar el flujo:
+
+- `QUALITY_LINT_CMD`: comando completo para linters.
+- `QUALITY_TEST_CMD`: comando que ejecuta las pruebas automatizadas.
+- `QUALITY_COVERAGE_CMD`: comando que imprime el porcentaje de cobertura.
+- `QUALITY_COVERAGE_VALUE`: valor numérico usado por el comando de cobertura
+  por defecto (100 si no se define).
+- `QUALITY_MIN_COVERAGE`: umbral mínimo utilizado cuando no se pasa el flag
+  `--min-coverage`.
+
+El hook `scripts/git-hooks/pre-push` reutiliza este job y garantiza que antes
+de cada `git push` se ejecuten las pruebas y que la cobertura sea igual o
+superior al 80 % (configurable con `--min-coverage` o la variable de entorno
+`PRE_PUSH_MIN_COVERAGE`).
+
+### Integración en CI/CD
+
+Para adoptar el mismo flujo en pipelines remotas basta con invocar el script
+de calidad dentro del job correspondiente. Ejemplo en GitHub Actions:
+
+```yaml
+- name: Validaciones de calidad
+  run: |
+    QUALITY_LINT_CMD="shellcheck scripts/**/*.sh" \
+    QUALITY_TEST_CMD="bats --recursive tests" \
+    QUALITY_COVERAGE_CMD="coverage report --fail-under=85" \
+    bash scripts/quality/ejecutar_validaciones.sh --min-coverage 85
+```
+
+Esto mantiene alineados los hooks locales y el pipeline central, evitando
+desviaciones entre ambientes.
 
 ## Accessing MediaWiki
 
