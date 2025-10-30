@@ -1,3 +1,10 @@
+---
+id: NOTE-SEG-001
+estado: vigente
+propietario: Equipo de Seguridad
+ultima_actualizacion: 2025-02-15
+relacionados: [ADR-2024-006]
+---
 # Informe de controles de seguridad
 
 ## Alcance y metodología

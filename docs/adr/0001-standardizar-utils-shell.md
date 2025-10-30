@@ -1,3 +1,10 @@
+---
+id: ADR-2024-001
+estado: propuesta
+propietario: Equipo de Infraestructura
+ultima_actualizacion: 2025-02-15
+relacionados: [NOTE-INFRA-UTILS]
+---
 # ADR 0001: Estandarización de utilidades shell en `infrastructure/utils`
 
 - Estado: Propuesta (pendiente de validación)

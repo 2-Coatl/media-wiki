@@ -1,3 +1,10 @@
+---
+id: NOTE-INFRA-UTILS
+estado: vigente
+propietario: Equipo de Infraestructura
+ultima_actualizacion: 2025-02-15
+relacionados: [ADR-2024-001, ADR-2024-003]
+---
 # Análisis y propuesta de layout para `infrastructure/utils`
 
 ## 1. Panorama actual

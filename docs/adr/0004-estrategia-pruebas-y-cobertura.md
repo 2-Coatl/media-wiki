@@ -1,3 +1,10 @@
+---
+id: ADR-2024-004
+estado: aceptada
+propietario: Equipo de QA
+ultima_actualizacion: 2025-02-15
+relacionados: [ADR-2024-002]
+---
 # 0004 - Estrategia de herramientas de pruebas y cobertura para scripts Bash
 
 ## Estado
