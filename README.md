@@ -132,6 +132,17 @@ DEPLOYMENT_MODE="prod"
 - Database: Least privilege, IP-restricted access
 - System: Ubuntu hardening, minimal services
 
+## Architecture Decision Records (ADRs)
+
+La carpeta [`docs/adr/`](docs/adr) reúne los Architecture Decision Records que rigen el proyecto. Consulta cada documento para
+entender el contexto, la decisión tomada y las implicaciones que debemos mantener en el tiempo:
+
+- [0001 - Estandarizar utilidades de shell](docs/adr/0001-standardizar-utils-shell.md)
+- [0002 - Seleccionar framework de pruebas para Bash](docs/adr/0002-framework-pruebas-bash.md)
+
+> **Nota para mantenedores:** cuando se agregue un nuevo ADR, actualiza esta sección enlazando el archivo recién creado y
+mantén el orden cronológico ascendente para conservar una navegación coherente.
+
 ## Trunk-Based Development
 
 Git hooks automatically enforce:
