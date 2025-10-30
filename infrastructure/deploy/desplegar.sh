@@ -6,7 +6,7 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 source "$PROJECT_ROOT/infrastructure/utils/core.sh"
 
-SECURITY_DIR="${DEPLOY_SECURITY_DIR:-$PROJECT_ROOT/scripts/security}"
+SECURITY_DIR="${DEPLOY_SECURITY_DIR:-$PROJECT_ROOT/infrastructure/security}"
 
 readonly SECURITY_STEPS=(
   "harden-ssh.sh"

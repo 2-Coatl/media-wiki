@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 setup() {
-  export SCRIPT="${BATS_TEST_DIRNAME}/../../scripts/quality/ejecutar_validaciones.sh"
+  export SCRIPT="${BATS_TEST_DIRNAME}/../../infrastructure/quality/ejecutar_validaciones.sh"
   export TMP_WORKDIR="$(mktemp -d)"
 }
 

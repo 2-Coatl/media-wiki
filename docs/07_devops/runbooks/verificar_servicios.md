@@ -17,7 +17,7 @@ Confirmar que los servicios críticos de la plataforma operan correctamente tras
 4. Ejecuta la colección de Postman **MediaWiki - Smoke** (`docs/07_devops/postman/mediawiki_smoke.postman_collection.json`) usando el entorno `MediaWiki Vagrant`. Verifica que todas las solicitudes devuelven código 200.
 5. Valida la base de datos con `vagrant ssh mediawiki-db01 -c "mysql -uwikiuser -p$DB_PASSWORD -e 'SELECT 1;'"` (obtén la contraseña desde `config/variables.sh`).
 6. Revisa los logs de Apache con `vagrant ssh mediawiki-web01 -c "sudo journalctl -u apache2 --since '-10 minutes'"` y confirma que no hay errores 5xx.
-7. Ejecuta `scripts/validation/validate-group-d.sh` para correr las verificaciones automatizadas del stack base.
+7. Ejecuta `infrastructure/validation/validate-group-d.sh` para correr las verificaciones automatizadas del stack base.
 8. Notifica al canal `#ops` con un resumen de estado, tiempos y tickets relacionados.
 
 ## Verificación

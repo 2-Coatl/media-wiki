@@ -15,7 +15,7 @@ Este documento registra las brechas detectadas durante la revisión del desplieg
 | --- | --- | --- | --- | --- |
 | B-01 | MariaDB expuesto a todas las interfaces mediante `bind-address = 0.0.0.0`. | Alto: habilita conexiones desde cualquier origen, incrementando el riesgo de acceso no autorizado si fallan los controles de red. | Bajo: requiere ajustar el valor de enlace y validar conectividad entre las VMs. | La configuración generada por `install-mariadb.sh` fuerza el parámetro `bind-address = 0.0.0.0`. |
 | B-02 | Configuración de Fail2ban referencia una acción inexistente `%(action_mw)s`. | Alto: Fail2ban puede fallar al cargar `jail.local`, dejando sin protección frente a ataques de fuerza bruta. | Medio: es necesario definir una acción soportada (por ejemplo `%(action_mwl)s`) y validar los flujos de notificación. | El template de `jail.local` define `action = %(action_mw)s` sin que exista una acción con ese identificador. |
-| B-03 | No existe automatización para generar respaldos periódicos de la base de datos. | Muy alto: una pérdida de datos implicaría restauraciones manuales o imposibles. | Medio/Alto: requiere diseñar scripts de respaldo, almacenamiento local en `backups/` y políticas de retención. | El repositorio documenta `backups/` como destino de respaldos, pero la carpeta de `scripts/` no contiene utilidades de respaldo. |
+| B-03 | No existe automatización para generar respaldos periódicos de la base de datos. | Muy alto: una pérdida de datos implicaría restauraciones manuales o imposibles. | Medio/Alto: requiere diseñar scripts de respaldo, almacenamiento local en `backups/` y políticas de retención. | El repositorio documenta `backups/` como destino de respaldos, pero la carpeta de `infrastructure/` no contiene utilidades de respaldo. |
 
 ### Escala utilizada
 
@@ -37,10 +37,10 @@ Este documento registra las brechas detectadas durante la revisión del desplieg
 - **Mitigación propuesta**: Reemplazar la acción por `%(action_mwl)s` (incluye logging y correo) o crear un archivo `action.d/mediawiki.local` con el comportamiento deseado.
 
 ### B-03 – Ausencia de automatización de respaldos
-- **Descripción**: Aunque el README reserva el directorio `backups/` para respaldos, no existe un módulo en `scripts/` que genere copias de la base de datos ni políticas de retención.
+- **Descripción**: Aunque el README reserva el directorio `backups/` para respaldos, no existe un módulo en `infrastructure/` que genere copias de la base de datos ni políticas de retención.
 - **Impacto**: Muy alto. Ante corrupción o compromisos, la recuperación dependería de respaldos manuales inexistentes.
 - **Esfuerzo**: Medio/Alto. Se requiere diseñar scripts parametrizables, coordinar cron/Timers de systemd y validar restauraciones.
-- **Mitigación propuesta**: Implementar un script `scripts/backups/create-mariadb-backup.sh` que use credenciales de `config/secrets.env`, almacene los dumps con sellos de tiempo y limite la retención.
+- **Mitigación propuesta**: Implementar un script `infrastructure/backups/create-mariadb-backup.sh` que use credenciales de `config/secrets.env`, almacene los dumps con sellos de tiempo y limite la retención.
 
 ## Priorización sugerida
 

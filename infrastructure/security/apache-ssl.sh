@@ -194,7 +194,7 @@ main() {
 
     if [[ ! -f "$SSL_CERT_PATH" ]] || [[ ! -f "$SSL_KEY_PATH" ]]; then
         log_error "SSL certificate not found"
-        echo "Run: sudo bash $PROJECT_ROOT/scripts/security/ssl-certificate.sh"
+        echo "Run: sudo bash $PROJECT_ROOT/infrastructure/security/ssl-certificate.sh"
         exit 1
     fi
 

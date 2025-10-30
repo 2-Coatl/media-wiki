@@ -12,17 +12,17 @@ Dejar listo el entorno de desarrollo tras la primera ejecución de `vagrant up`,
 
 ## Pasos
 1. Ejecuta `vagrant up mediawiki-db01 mediawiki-web01` para provisionar las máquinas base.
-2. Corre `scripts/validation/validate-network.sh` y confirma que todas las pruebas de conectividad pasan.
+2. Corre `infrastructure/validation/validate-network.sh` y confirma que todas las pruebas de conectividad pasan.
 3. Dentro de `mediawiki-web01`, ejecuta `vagrant ssh mediawiki-web01 -c "php -v"` y `vagrant ssh mediawiki-web01 -c "apache2ctl -M"` para verificar que PHP y Apache quedaron instalados.
 4. Sincroniza las colecciones de Postman importando `docs/07_devops/postman/mediawiki_smoke.postman_collection.json` y asigna el entorno `docs/07_devops/postman/mediawiki_vagrant.postman_environment.json`.
 5. Corre `bin/setup-trunk-based` para instalar hooks locales y validar dependencias de CLI básicas (git, vagrant, shellcheck, shfmt).
-6. Ejecuta `scripts/validation/validate-group-d.sh` y guarda el reporte resultante en el ticket o documento del sprint.
+6. Ejecuta `infrastructure/validation/validate-group-d.sh` y guarda el reporte resultante en el ticket o documento del sprint.
 7. Registra cualquier ajuste extra en la sección **Notas operativas** de este runbook.
 
 ## Verificación
-- `scripts/validation/validate-network.sh` termina en verde.
+- `infrastructure/validation/validate-network.sh` termina en verde.
 - La colección **MediaWiki - Smoke** se ejecuta sin fallas en Postman o `newman`.
-- `scripts/validation/validate-group-d.sh` no reporta errores.
+- `infrastructure/validation/validate-group-d.sh` no reporta errores.
 
 ## Rollback
 1. Si el aprovisionamiento falló, ejecuta `vagrant destroy -f` y repite el proceso desde el paso 1.

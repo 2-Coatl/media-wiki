@@ -17,7 +17,7 @@ Describe procedimientos diarios, mantenimientos planificados y respuesta a incid
 
 1. Verificar dashboard de Nagios (`http://192.168.56.30/nagios`).
 2. Revisar logs críticos via Rsyslog (`/var/log/central/mediawiki-web01/*.log`).
-3. Ejecutar `scripts/operations/health-check.sh` y registrar resultados en la bitácora.
+3. Ejecutar `infrastructure/operations/health-check.sh` y registrar resultados en la bitácora.
 4. Confirmar que los jobs diferidos (`runJobs.php`) estén procesándose sin rezago.
 
 ## 3. Mantenimiento preventivo
@@ -31,8 +31,8 @@ Describe procedimientos diarios, mantenimientos planificados y respuesta a incid
 
 ## 4. Procedimientos de backup
 
-1. Ejecuta `scripts/operations/backup-database.sh` y verifica checksum.
-2. Ejecuta `scripts/operations/backup-files.sh` para `images/`, `extensions/` y `LocalSettings.php`.
+1. Ejecuta `infrastructure/operations/backup-database.sh` y verifica checksum.
+2. Ejecuta `infrastructure/operations/backup-files.sh` para `images/`, `extensions/` y `LocalSettings.php`.
 3. Transfiere artefactos a almacenamiento externo cifrado.
 4. Documenta en la bitácora la fecha, tamaño y ubicación.
 
@@ -100,10 +100,10 @@ Describe procedimientos diarios, mantenimientos planificados y respuesta a incid
 
 ## 10. Scripts y comandos útiles
 
-- `./scripts/operations/health-check.sh`
-- `./scripts/operations/backup-database.sh`
-- `./scripts/operations/restore-database.sh`
-- `./scripts/operations/maintenance-tasks.sh`
+- `./infrastructure/operations/health-check.sh`
+- `./infrastructure/operations/backup-database.sh`
+- `./infrastructure/operations/restore-database.sh`
+- `./infrastructure/operations/maintenance-tasks.sh`
 
 ## Matriz RACI
 

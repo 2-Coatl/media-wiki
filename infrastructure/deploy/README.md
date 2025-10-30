@@ -33,7 +33,7 @@ la secuencia ejecutada con `DEPLOY_SECURITY_LOG`.
    (`*.backup.<timestamp>` en `/etc/ssh/`, `/etc/fail2ban/`, `/etc/apache2/`, etc.).
 3. Validar el estado del servicio afectado con `systemctl status <servicio>` y los comandos informativos
    que cada script imprime (por ejemplo `fail2ban-client status`).
-4. Reintentar la rutina fallida ejecutando directamente `bash scripts/security/<script>.sh` o relanzando
-   `scripts/deploy/desplegar.sh` tras corregir el problema.
+4. Reintentar la rutina fallida ejecutando directamente `bash infrastructure/security/<script>.sh` o relanzando
+   `infrastructure/deploy/desplegar.sh` tras corregir el problema.
 5. En entornos Vagrant, se recomienda realizar un `vagrant snapshot save` previo al despliegue para poder
    volver rápidamente al estado anterior ante errores críticos.

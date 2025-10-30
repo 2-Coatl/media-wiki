@@ -15,7 +15,7 @@ Aceptada
 
 ## Contexto
 
-Los scripts Bash del repositorio (por ejemplo `scripts/quality/ejecutar_validaciones.sh`) deben
+Los scripts Bash del repositorio (por ejemplo `infrastructure/quality/ejecutar_validaciones.sh`) deben
 validarse con TDD y mantener un mínimo de 80 % de cobertura. El directorio `tests/`
 solo contenía plantillas y no existía una herramienta instalada para ejecutar suites
 `.bats` u obtener estadísticas de cobertura.
@@ -32,7 +32,7 @@ su distribución estable (`tests/vendor/bats-core`) para garantizar disponibilid
 sin conexión. Las suites residirán en `tests/<dominio>/*.bats` y se ejecutarán con
 el wrapper `bin/test-scripts.sh`, que abstrae la ubicación del vendor.
 
-Para la cobertura se implementará un **instrumentador propio en Bash** (`scripts/quality/bash-coverage.sh`).
+Para la cobertura se implementará un **instrumentador propio en Bash** (`infrastructure/quality/bash-coverage.sh`).
 Este script utiliza el trap `DEBUG` y `BASH_SOURCE` para registrar las líneas
 visitadas mientras se ejecutan los tests Bats. Posteriormente genera reportes en
 formato JSON y Cobertura XML en `reports/coverage/scripts/` sin requerir utilidades
@@ -45,7 +45,7 @@ instrumentador después de los tests.
   scripts clave y puede ejecutarse con el vendor oficial sin conectividad externa.
 - El flujo de cobertura es reproducible en cualquier VM Vagrant y respeta el objetivo
   de 80 % sin depender de herramientas externas como kcov o bashcov.
-- El equipo debe mantener `scripts/quality/bash-coverage.sh` para incorporar mejoras
+- El equipo debe mantener `infrastructure/quality/bash-coverage.sh` para incorporar mejoras
   (por ejemplo, filtrado de rutas o combinación de múltiples ejecuciones).
 - Se evita introducir dependencias adicionales (Ruby, compiladores o contenedores),
   reduciendo la huella operativa del laboratorio.

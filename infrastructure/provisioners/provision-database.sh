@@ -26,7 +26,7 @@ fi
 
 install_base_system() {
     log_step "[1/7] Installing base system"
-    bash "$PROJECT_ROOT/scripts/installation/install-base.sh"
+    bash "$PROJECT_ROOT/infrastructure/installation/install-base.sh"
 }
 
 configure_timezone() {
@@ -68,7 +68,7 @@ configure_network() {
 
 install_mariadb() {
     log_step "[4/7] Installing MariaDB"
-    bash "$PROJECT_ROOT/scripts/installation/install-mariadb.sh"
+    bash "$PROJECT_ROOT/infrastructure/installation/install-mariadb.sh"
 }
 
 secure_mariadb() {
@@ -207,7 +207,7 @@ print_summary() {
     echo "  1. Ensure web01 is running"
     echo "  2. Run migration script on web01:"
     echo "     vagrant ssh mediawiki-web01"
-    echo "     sudo bash /vagrant/scripts/migration/migrate-to-mariadb.sh"
+    echo "     sudo bash /vagrant/infrastructure/migration/migrate-to-mariadb.sh"
     echo ""
     echo "========================================"
     echo ""

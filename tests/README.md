@@ -18,7 +18,7 @@ bats tests/
 
 ## Prototipos evaluados
 
-- `tests/quality/ejecutar_validaciones.bats`: suite creada para validar `scripts/quality/ejecutar_validaciones.sh` con sintaxis Bats.
+- `tests/quality/ejecutar_validaciones.bats`: suite creada para validar `infrastructure/quality/ejecutar_validaciones.sh` con sintaxis Bats.
 - `tests/prototypes/bats/bats_stub.sh`: intérprete mínimo para ejecutar los `.bats` mientras no exista una instalación oficial.
 - `tests/prototypes/shunit2/test_ejecutar_validaciones.sh`: pruebas equivalentes usando el stub de shunit2 ubicado en el mismo directorio.
 

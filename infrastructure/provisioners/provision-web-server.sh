@@ -25,7 +25,7 @@ fi
 
 install_base_system() {
     log_step "[1/8] Installing base system"
-    bash "$PROJECT_ROOT/scripts/installation/install-base.sh"
+    bash "$PROJECT_ROOT/infrastructure/installation/install-base.sh"
 }
 
 configure_timezone() {
@@ -68,17 +68,17 @@ configure_network() {
 
 install_apache() {
     log_step "[4/8] Installing Apache"
-    bash "$PROJECT_ROOT/scripts/installation/install-apache.sh"
+    bash "$PROJECT_ROOT/infrastructure/installation/install-apache.sh"
 }
 
 install_php() {
     log_step "[5/8] Installing PHP"
-    bash "$PROJECT_ROOT/scripts/installation/install-php.sh"
+    bash "$PROJECT_ROOT/infrastructure/installation/install-php.sh"
 }
 
 install_mediawiki() {
     log_step "[6/8] Installing MediaWiki"
-    bash "$PROJECT_ROOT/scripts/installation/install-mediawiki.sh"
+    bash "$PROJECT_ROOT/infrastructure/installation/install-mediawiki.sh"
 }
 
 configure_apache_vhost() {
@@ -176,7 +176,7 @@ show_completion_message() {
     echo ""
     echo "After database server is ready:"
     echo "  vagrant ssh $VM_WEB"
-    echo "  sudo bash /vagrant/scripts/migration/migrate-to-mariadb.sh"
+    echo "  sudo bash /vagrant/infrastructure/migration/migrate-to-mariadb.sh"
     echo ""
     echo "========================================"
     echo ""

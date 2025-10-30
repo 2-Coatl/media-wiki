@@ -58,7 +58,7 @@ opciones soportadas y los códigos de salida.
 ## Alcance
 - Equipos que necesitan correr utilidades de diagnóstico, cobertura o linters sin
   instalarlas en las máquinas virtuales de Vagrant.
-- Casos documentados en scripts bajo `scripts/operations/` o notas en
+- Casos documentados en scripts bajo `infrastructure/operations/` o notas en
   `docs/05_operaciones/notas/`.
 - No cubre la ejecución de Postman/Newman ni el aprovisionamiento del entorno
   principal.
@@ -71,14 +71,14 @@ opciones soportadas y los códigos de salida.
 
 ## Componentes y artefactos
 - **Imágenes base** listadas en `docs/05_operaciones/notas/`.
-- **Scripts de orquestación** dentro de `scripts/operations/` que invocan Podman.
+- **Scripts de orquestación** dentro de `infrastructure/operations/` que invocan Podman.
 - **Variables de entorno** definidas en cada script; revisar comentarios antes de
   ejecutar.
 - **Cliente remoto** cuando se necesite operar contra la API REST desde estaciones
   macOS o Windows.
 
 ## Flujo general de uso
-1. Revisa el script recomendado en `scripts/operations/` y valida parámetros.
+1. Revisa el script recomendado en `infrastructure/operations/` y valida parámetros.
 2. Ejecuta el script o la instrucción `podman run` indicada para lanzar el
    contenedor efímero.
 3. Realiza la tarea puntual (por ejemplo, generar un reporte de cobertura).

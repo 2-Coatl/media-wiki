@@ -91,8 +91,8 @@ Inventario de parámetros críticos aplicados en la plataforma MediaWiki Product
 1. Documenta la modificación en un ADR si afecta arquitectura.
 2. Crea rama feature siguiendo TDD (tests primero, objetivo ≥80% coverage).
 3. Aplica cambio en entorno de staging (`vagrant up` aislado).
-4. Ejecuta `./scripts/run-all-tests.sh` y revisa `tests/reports/`.
-5. Solicita revisión cruzada y valida despliegue usando `scripts/integration/final-integration.sh`.
+4. Ejecuta `./infrastructure/run-all-tests.sh` y revisa `tests/reports/`.
+5. Solicita revisión cruzada y valida despliegue usando `infrastructure/integration/final-integration.sh`.
 
 ## Referencias cruzadas
 

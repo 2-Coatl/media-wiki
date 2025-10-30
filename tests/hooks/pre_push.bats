@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 setup() {
-  export SCRIPT="${BATS_TEST_DIRNAME}/../../scripts/git-hooks/pre-push"
+  export SCRIPT="${BATS_TEST_DIRNAME}/../../infrastructure/git_hooks/pre-push"
   export TMP_WORKDIR="$(mktemp -d)"
 }
 

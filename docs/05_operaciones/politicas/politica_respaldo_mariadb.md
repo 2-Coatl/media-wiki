@@ -15,7 +15,7 @@ Garantizar la continuidad operativa del servicio MediaWiki mediante respaldos co
 - Ambientes `dev`, `stage` y `prod` administrados por el equipo de Operaciones.
 
 ## Lineamientos
-1. **Frecuencia**: ejecutar `scripts/backups/create_mariadb_backup.sh` cada 6 horas mediante cron en `mediawiki-db01`.
+1. **Frecuencia**: ejecutar `infrastructure/backups/create_mariadb_backup.sh` cada 6 horas mediante cron en `mediawiki-db01`.
 2. **Destino**: almacenar los archivos generados bajo `/opt/backups` (override mediante `BACKUP_BASE_DIR`).
 3. **Retención**: conservar respaldos de los últimos 7 días (`RETENTION_DAYS` configurable) y purgar automáticamente archivos más antiguos.
 4. **Integridad**: validar cada archivo con `gzip -t` tras su creación (incluido en el script).
@@ -27,7 +27,7 @@ Garantizar la continuidad operativa del servicio MediaWiki mediante respaldos co
 1. Crear directorio de trabajo y garantizar permisos restringidos (`chown root:root`, `chmod 750`).
 2. Programar cron con usuario `root`:
    ```cron
-   0 */6 * * * /opt/mediawiki/scripts/backups/create_mariadb_backup.sh >> /var/log/mediawiki-setup/backups.log 2>&1
+   0 */6 * * * /opt/mediawiki/infrastructure/backups/create_mariadb_backup.sh >> /var/log/mediawiki-setup/backups.log 2>&1
    ```
 3. Supervisar ejecución revisando el log y el contenido de `/opt/backups`.
 4. Ejecutar restauración de prueba semanal siguiendo el runbook `docs/05_operaciones/manual_operaciones_mediawiki.md#6-runbooks-de-incidentes`.
