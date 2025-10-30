@@ -139,6 +139,10 @@ entender el contexto, la decisión tomada y las implicaciones que debemos manten
 
 - [0001 - Estandarizar utilidades de shell](docs/adr/0001-standardizar-utils-shell.md)
 - [0002 - Seleccionar framework de pruebas para Bash](docs/adr/0002-framework-pruebas-bash.md)
+- [0003 - Convención de módulos para scripts Bash](docs/adr/0003-convencion-modulos-scripts.md)
+- [0004 - Estrategia de herramientas de pruebas y cobertura para scripts Bash](docs/adr/0004-estrategia-pruebas-y-cobertura.md)
+- [0005 - Política para registrar ADRs ante cambios relevantes](docs/adr/0005-politica-adrs-cambios-relevantes.md)
+- [0006 - Plan inicial para reforzar seguridad de servicios y respaldos](docs/adr/0006-plan-inicial-seguridad-y-backups.md)
 
 > **Nota para mantenedores:** cuando se agregue un nuevo ADR, actualiza esta sección enlazando el archivo recién creado y
 mantén el orden cronológico ascendente para conservar una navegación coherente.
