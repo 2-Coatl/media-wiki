@@ -2,7 +2,7 @@
 id: DOC-ARQ-INDEX-001
 estado: vigente
 propietario: Equipo de Arquitectura
-ultima_actualizacion: 2025-02-16
+ultima_actualizacion: 2025-02-17
 relacionados: [DOC-INDEX-001, DOC-PLT-001, DOC-ADR-INDEX-001]
 ---
 # Arquitectura
@@ -21,3 +21,6 @@ relacionados: [DOC-INDEX-001, DOC-PLT-001, DOC-ADR-INDEX-001]
 - Diagramas actualizados de contexto y despliegue.
 - Documentar límites de módulos del monolito.
 - Definir estrategia de migración a microfrontends.
+
+## Registro reciente
+- 2025-02-17 → Se consolidaron todos los ADR en `adrs/` y se actualizó la [tarea](tareas/reubicar-adrs.md) con la evidencia.
