@@ -3,7 +3,7 @@ id: DOC-PLT-001
 estado: vigente
 propietario: PMO
 ultima_actualizacion: 2025-02-16
-relacionados: [DOC-INDEX-001]
+relacionados: [DOC-INDEX-001, DOC-RQ-UC-GUIA, DOC-RQ-RN-GUIA]
 ---
 # Plantillas Express
 
@@ -15,6 +15,10 @@ Centraliza aquí los formatos oficiales para decisiones, requisitos y artefactos
 - [Caso de uso completo](plantillas/caso-uso-template.md)
 - [Caso de prueba](plantillas/caso-prueba-template.md)
 - [Checklist de verificación](checklists/revision-documentacion.md)
+
+## Guías complementarias
+- **Casos de uso** → [Guía práctica y plantillas extendidas](../02-requisitos/casos-de-uso/guia-practica.md)
+- **Reglas de negocio** → [Guía práctica y matrices de referencia](../02-requisitos/reglas-de-negocio/guia-practica.md)
 
 ## Bloques rápidos
 
