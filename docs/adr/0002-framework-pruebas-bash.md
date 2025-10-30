@@ -1,3 +1,10 @@
+---
+id: ADR-2024-002
+estado: aceptada
+propietario: Equipo de QA
+ultima_actualizacion: 2025-02-15
+relacionados: []
+---
 # 0002 - Selección de framework de pruebas Bash y medición de cobertura
 
 ## Estado

@@ -1,3 +1,10 @@
+---
+id: ADR-TPL-000
+estado: plantilla
+propietario: Equipo de Arquitectura
+ultima_actualizacion: 2025-02-15
+relacionados: []
+---
 # {{ID}}. {{Título de la decisión}}
 
 - **Estado:** Propuesto | Aceptado | Rechazado | Obsoleto
