@@ -134,15 +134,15 @@ DEPLOYMENT_MODE="prod"
 
 ## Architecture Decision Records (ADRs)
 
-La carpeta [`docs/03-arquitectura/adrs/`](docs/03-arquitectura/adrs) reúne los Architecture Decision Records que rigen el proyecto. Consulta cada documento para
+La carpeta [`docs/03_arquitectura/adrs/`](docs/03_arquitectura/adrs) reúne los Architecture Decision Records que rigen el proyecto. Consulta cada documento para
 entender el contexto, la decisión tomada y las implicaciones que debemos mantener en el tiempo:
 
-- [0001 - Estandarizar utilidades de shell](docs/03-arquitectura/adrs/0001-standardizar-utils-shell.md)
-- [0002 - Seleccionar framework de pruebas para Bash](docs/03-arquitectura/adrs/0002-framework-pruebas-bash.md)
-- [0003 - Convención de módulos para scripts Bash](docs/03-arquitectura/adrs/0003-convencion-modulos-scripts.md)
-- [0004 - Estrategia de herramientas de pruebas y cobertura para scripts Bash](docs/03-arquitectura/adrs/0004-estrategia-pruebas-y-cobertura.md)
-- [0005 - Política para registrar ADRs ante cambios relevantes](docs/03-arquitectura/adrs/0005-politica-adrs-cambios-relevantes.md)
-- [0006 - Plan inicial para reforzar seguridad de servicios y respaldos](docs/03-arquitectura/adrs/0006-plan-inicial-seguridad-y-backups.md)
+- [0001 - Estandarizar utilidades de shell](docs/03_arquitectura/adrs/0001_standardizar_utils_shell.md)
+- [0002 - Seleccionar framework de pruebas para Bash](docs/03_arquitectura/adrs/0002_framework_pruebas_bash.md)
+- [0003 - Convención de módulos para scripts Bash](docs/03_arquitectura/adrs/0003_convencion_modulos_scripts.md)
+- [0004 - Estrategia de herramientas de pruebas y cobertura para scripts Bash](docs/03_arquitectura/adrs/0004_estrategia_pruebas_y_cobertura.md)
+- [0005 - Política para registrar ADRs ante cambios relevantes](docs/03_arquitectura/adrs/0005_politica_adrs_cambios_relevantes.md)
+- [0006 - Plan inicial para reforzar seguridad de servicios y respaldos](docs/03_arquitectura/adrs/0006_plan_inicial_seguridad_y_backups.md)
 
 > **Nota para mantenedores:** cuando se agregue un nuevo ADR, actualiza esta sección enlazando el archivo recién creado y
 mantén el orden cronológico ascendente para conservar una navegación coherente.
@@ -172,7 +172,7 @@ git commit -m "docs: update architecture diagram"
 ## Proceso para ADRs
 
 1. **Identificar la necesidad**: antes de modificar la arquitectura o tomar una decisión significativa, crea un issue describiendo el contexto y los objetivos.
-2. **Proponer la ADR**: copia `docs/03-arquitectura/adrs/000-template.md` a un nuevo archivo numerado secuencialmente (`docs/03-arquitectura/adrs/0003-nombre-decision.md`), completa todas las secciones en español y abre un pull request.
+2. **Proponer la ADR**: copia `docs/03_arquitectura/adrs/000_template.md` a un nuevo archivo numerado secuencialmente (`docs/03_arquitectura/adrs/0003_nombre_decision.md`), completa todas las secciones en español y abre un pull request.
 3. **Revisión colaborativa**: al menos una persona distinta al autor debe revisar la ADR, confirmando que el contexto sea claro, que la decisión esté justificada y que las alternativas estén bien documentadas.
 4. **Aprobación y merge**: una vez obtenida la aprobación, actualiza el estado a "Aceptado" en la ADR y fusiona el pull request siguiendo el flujo de trunk-based development.
 5. **Seguimiento**: documenta en la sección de Consecuencias cualquier impacto observado tras la implementación y actualiza el estado si la decisión cambia (por ejemplo, a "Obsoleto" o "Rechazado").
@@ -305,7 +305,7 @@ MIT License - See LICENSE file for details
 
 For issues and questions:
 - GitHub Issues: https://github.com/your-username/mediawiki-production-lab/issues
-- Documentation: docs/ directory
+- Documentation: docs/ directory (usa snake_case para carpetas y archivos).
 
 ## Acknowledgments
 
