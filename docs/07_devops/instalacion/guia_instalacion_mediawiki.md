@@ -26,7 +26,7 @@ relacionados: [DOC-INDEX-001, DOC-DEVOPS-PLAN-001]
    git clone https://example.org/mediawiki/media-wiki.git
    cd media-wiki
    ```
-2. Crea un archivo `.env` a partir de la plantilla en `config/variables.ejemplo`.
+2. Crea un archivo `.env` a partir de la plantilla en `infrastructure/config/variables.ejemplo`.
 3. Exporta variables sensibles para Vagrant:
    ```bash
    export MEDIAWIKI_ADMIN_PASS="CambiaEsto123"

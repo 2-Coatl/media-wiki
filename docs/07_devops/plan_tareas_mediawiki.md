@@ -28,8 +28,8 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 
 - [ ] Inicializar repositorio Git, ramas `main` y `develop`, y configuración de usuario.
 - [ ] Crear README, LICENSE (GPL-2.0-or-later), `.gitignore`, `.editorconfig` y hooks básicos.
-- [ ] Generar estructura de directorios (`bin/`, `config/`, `docs/`, `infrastructure/`, `tests/`, `vagrant/`).
-- [ ] Definir variables globales (`config/variables.sh`) con comentarios y `readonly`.
+- [ ] Generar estructura de directorios (`infrastructure/bin/`, `infrastructure/config/`, `docs/`, `infrastructure/`, `infrastructure/tests/`, `vagrant/`).
+- [ ] Definir variables globales (`infrastructure/config/variables.sh`) con comentarios y `readonly`.
 - [ ] Publicar documentación base (`docs/00_vision_y_alcance`, `docs/01_gobernanza`, etc.).
 - [ ] Implementar `infrastructure/validation/validate-phase-a.sh` con chequeos de estructura y documentación.
 - [ ] Registrar tag `group-a-complete` tras validación exitosa.
@@ -40,7 +40,7 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 - [ ] Añadir `logging.sh`, `validation.sh`, `service.sh`, `network.sh`, `database.sh` con pruebas unitarias Bats.
 - [ ] Configurar logs centralizados (`/var/log/mediawiki-setup.log`).
 - [ ] Documentar uso en `docs/06_qa/utilities.md`.
-- [ ] Crear `infrastructure/validation/validate-group-b.sh` y suite `tests/unit/test-all-utils.bats`.
+- [ ] Crear `infrastructure/validation/validate-group-b.sh` y suite `infrastructure/tests/unit/test-all-utils.bats`.
 - [ ] Emitir tag `group-b-complete` tras 100 % de pruebas verdes.
 
 ## Grupo C – Infraestructura Vagrant
@@ -65,8 +65,8 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 
 - [ ] Descargar y verificar MediaWiki 1.43 LTS (`download-mediawiki.sh`).
 - [ ] Extraer y mover archivos a `/var/www/html/mediawiki` con permisos adecuados (`extract-mediawiki.sh`).
-- [ ] Configurar VirtualHost de Apache (`config/apache/mediawiki-vhost.conf`, script de despliegue).
-- [ ] Ejecutar instalador web, almacenar `LocalSettings.php` en `config/mediawiki/` y aplicar hardening.
+- [ ] Configurar VirtualHost de Apache (`infrastructure/config/apache/mediawiki-vhost.conf`, script de despliegue).
+- [ ] Ejecutar instalador web, almacenar `LocalSettings.php` en `infrastructure/config/mediawiki/` y aplicar hardening.
 - [ ] Correr scripts post-instalación (`maintenance/update.php`, cron de `runJobs.php`, habilitar extensiones básicas).
 - [ ] Validar con `infrastructure/validation/validate-group-e.sh`, pruebas funcionales y documentar en `docs/04_mediawiki_installation.md`.
 - [ ] Crear snapshot `post-mediawiki-installation` y tag `group-e-complete`.
@@ -81,10 +81,10 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 
 ## Grupo G – Seguridad del sistema
 
-- [ ] Ejecutar scripts de hardening existentes (`harden-ssh.sh`, `install-fail2ban.sh`, `firewall-*.sh`, `apache-ssl.sh`).
+- [ ] Ejecutar scripts de hardening existentes (`harden_ssh.sh`, `install_fail2ban.sh`, `firewall-*.sh`, `apache_ssl.sh`).
 - [ ] Emitir o renovar certificados TLS, configurar headers de seguridad y revisar permisos.
 - [ ] Documentar controles aplicados, riesgos y excepciones en ADRs y `docs/03_arquitectura/adrs/`.
-- [ ] Crear pruebas de seguridad (`tests/security/`) y reportes de escaneo (nmap, lynis).
+- [ ] Crear pruebas de seguridad (`infrastructure/tests/security/`) y reportes de escaneo (nmap, lynis).
 - [ ] Actualizar checklist de auditoría en `docs/05_operaciones`.
 
 ## Grupo H – Monitoreo y logging
@@ -124,7 +124,7 @@ Este plan consolida todas las tareas necesarias para ejecutar el roadmap del Med
 
 ## Grupo M – Integración final
 
-- [ ] Ejecutar despliegue completo en entorno limpio (`bin/setup-project`, `infrastructure/deploy/desplegar.sh`).
+- [ ] Ejecutar despliegue completo en entorno limpio (`infrastructure/bin/setup_project`, `infrastructure/deploy/desplegar.sh`).
 - [ ] Correr smoke tests, validaciones de seguridad y monitoreo integrados.
 - [ ] Generar release notes, actualizar CHANGELOG y crear tag final.
 - [ ] Capturar snapshot final y preparar plan de soporte post-lanzamiento.

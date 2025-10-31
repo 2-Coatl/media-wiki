@@ -14,7 +14,7 @@ Recuperar cargas ETL que fallaron y restaurar la consistencia de datos sin dupli
 - Acceso a la VM `mediawiki-mgmt01` (o al host que orquesta la ETL) mediante `vagrant ssh`.
 - Identificador del lote fallido (`job_id`).
 - Último backup válido (`backups/<fecha>_etl.sql`).
-- Variables de entorno configuradas en `config/variables.sh`.
+- Variables de entorno configuradas en `infrastructure/config/variables.sh`.
 
 ## Pasos
 1. Suspende programaciones automáticas ejecutando `vagrant ssh mediawiki-mgmt01 -c "sudo systemctl stop etl-scheduler.service"`.

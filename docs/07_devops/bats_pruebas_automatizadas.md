@@ -22,27 +22,27 @@ framework).
 - Centralizar los lineamientos para vendorizar `bats-core` y sus librerías
   (`bats-support`, `bats-assert`) sin depender de Internet.
 - Ofrecer ejemplos prácticos reutilizables para nuevas suites ubicadas bajo
-  `tests/<dominio>/*.bats`.
+  `infrastructure/tests/<dominio>/*.bats`.
 
 ## 2. Estructura recomendada del repositorio
 
 ```
-tests/
-  vendor/
-    bats-core/          <- distribución vendorizada
-  test_helper/
-    bats-support/       <- librería auxiliar
-    bats-assert/        <- librería de aserciones
-  calidad/
-    ejecutar_validaciones.bats
-  ...
 infrastructure/
+  tests/
+    vendor/
+      bats-core/          <- distribución vendorizada
+    test_helper/
+      bats-support/       <- librería auxiliar
+      bats-assert/        <- librería de aserciones
+    calidad/
+      ejecutar_validaciones.bats
+    ...
   quality/
     ejecutar_validaciones.sh
 ```
 
-La carpeta `tests/vendor/bats-core` debe contener el runtime oficial. Las
-librerías auxiliares se ubican en `tests/test_helper/` para ser cargadas con el
+La carpeta `infrastructure/tests/vendor/bats-core` debe contener el runtime oficial. Las
+librerías auxiliares se ubican en `infrastructure/tests/test_helper/` para ser cargadas con el
 comando `load` dentro de cada suite.
 
 ## 3. Instalación rápida (sin conexión)
@@ -51,13 +51,13 @@ comando `load` dentro de cada suite.
 2. Añadir los vendors como submódulos (o sincronizarlos si ya existen):
 
    ```bash
-   git submodule add https://github.com/bats-core/bats-core.git tests/vendor/bats-core
-   git submodule add https://github.com/bats-core/bats-support.git tests/test_helper/bats-support
-   git submodule add https://github.com/bats-core/bats-assert.git tests/test_helper/bats-assert
+   git submodule add https://github.com/bats-core/bats-core.git infrastructure/tests/vendor/bats-core
+   git submodule add https://github.com/bats-core/bats-support.git infrastructure/tests/test_helper/bats-support
+   git submodule add https://github.com/bats-core/bats-assert.git infrastructure/tests/test_helper/bats-assert
    git submodule update --init --recursive
    ```
 
-3. Asegurar permisos de ejecución en `tests/vendor/bats-core/bin/bats`.
+3. Asegurar permisos de ejecución en `infrastructure/tests/vendor/bats-core/bin/bats`.
 4. Documentar la actualización del vendor en un ADR o nota operativa cuando se
    cambie la versión.
 
@@ -67,7 +67,7 @@ misma estructura.
 
 ## 4. Primer caso de prueba en TDD
 
-1. Crear la suite `tests/calidad/mi_script.bats` con un caso mínimo:
+1. Crear la suite `infrastructure/tests/calidad/mi_script.bats` con un caso mínimo:
 
    ```bash
    #!/usr/bin/env bats
@@ -76,8 +76,8 @@ misma estructura.
      load 'test_helper/bats-support/load'
      load 'test_helper/bats-assert/load'
 
-     DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )"
-    PATH="$DIR/../../infrastructure:$PATH"
+    DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )"
+    PATH="$DIR/../../../infrastructure:$PATH"
    }
 
    @test "puedo ejecutar el script" {
@@ -86,7 +86,7 @@ misma estructura.
    }
    ```
 
-2. Ejecutar la suite con `tests/vendor/bats-core/bin/bats tests/calidad/mi_script.bats`
+2. Ejecutar la suite con `infrastructure/tests/vendor/bats-core/bin/bats infrastructure/tests/calidad/mi_script.bats`
    y verificar el fallo inicial (archivo inexistente).
 3. Implementar el script correspondiente bajo `infrastructure/` y repetir la ejecución
    hasta obtener un resultado verde.
@@ -122,13 +122,13 @@ misma estructura.
 
 - Cuando la prueba dependa del estado previo, utilizar `skip "motivo"` lo antes
   posible para evitar falsos negativos en entornos compartidos.
-- Agrupar lógica común en `tests/test_helper/common-setup.bash` y cargarla con
+- Agrupar lógica común en `infrastructure/tests/test_helper/common-setup.bash` y cargarla con
   `load 'test_helper/common-setup'`.
 
 ## 8. Suites distribuidas en múltiples archivos
 
 - Crear un archivo `.bats` por dominio o script para facilitar el mantenimiento.
-- Ejecutar todo el paquete con `tests/vendor/bats-core/bin/bats tests/`, lo que
+- Ejecutar todo el paquete con `infrastructure/tests/vendor/bats-core/bin/bats infrastructure/tests/`, lo que
   descubrirá automáticamente todos los archivos con extensión `.bats` (sin
   necesidad del flag `-r` si no existen subdirectorios anidados).
 - Incluir `setup()` y `teardown()` propios en cada archivo según sus necesidades.
@@ -144,9 +144,9 @@ misma estructura.
 
 ## 10. Integración con cobertura y CI
 
-- Ejecutar las suites mediante `bin/test-scripts.sh`, que encapsula la ruta al
+- Ejecutar las suites mediante `infrastructure/bin/test_scripts.sh`, que encapsula la ruta al
   vendor de Bats.
-- Para cobertura, utilizar `bin/coverage-scripts.sh`, el cual invoca
+- Para cobertura, utilizar `infrastructure/bin/coverage_scripts.sh`, el cual invoca
   `infrastructure/quality/bash-coverage.sh` tras las pruebas.
 - Publicar los reportes en `reports/coverage/scripts/` y verificar que el
   porcentaje cumpla con el umbral definido (≥ 80 %).
@@ -156,6 +156,6 @@ misma estructura.
 - [Repositorio oficial de bats-core](https://github.com/bats-core/bats-core)
 - [Biblioteca bats-support](https://github.com/bats-core/bats-support)
 - [Biblioteca bats-assert](https://github.com/bats-core/bats-assert)
-- Plantillas existentes en `tests/quality/` y `tests/prototypes/`
+- Plantillas existentes en `infrastructure/tests/quality/` y `infrastructure/tests/prototypes/`
 - ADR relacionados: `docs/03_arquitectura/adrs/0002_framework_pruebas_bash.md`
   y `docs/03_arquitectura/adrs/0004_estrategia_pruebas_y_cobertura.md`

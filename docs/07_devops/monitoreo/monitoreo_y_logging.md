@@ -13,7 +13,7 @@ personalizados, alertas, logging centralizado y dashboards complementarios.
 
 ## 1. Configuración base de Nagios
 
-- **Archivos fuente** en `config/monitoring/`:
+- **Archivos fuente** en `infrastructure/config/monitoring/`:
   - `nagios-hosts.cfg` con definiciones para `mediawiki-web01` y
     `mediawiki-db01`.
   - `nagios-services.cfg` incluyendo HTTP, HTTPS, SSH, PING, discos, carga y
@@ -51,7 +51,7 @@ personalizados, alertas, logging centralizado y dashboards complementarios.
 
 - **Lineamientos**:
   - Configurar Postfix (o relay externo) en `mgmt01` para envío de correos.
-  - `config/monitoring/alert-rules.conf` documenta umbrales (CPU, memoria, disco)
+  - `infrastructure/config/monitoring/alert-rules.conf` documenta umbrales (CPU, memoria, disco)
     y escalaciones.
 - **Actualizaciones en Nagios**:
   - Ajustar `contacts.cfg` y `contactgroups` para reflejar destinatarios reales.

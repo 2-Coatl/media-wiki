@@ -30,7 +30,7 @@ procedimientos de restauración, automatización con `cron` y chequeos de salud.
 
 - **Script**: `infrastructure/backups/create_mariadb_backup.sh`.
 - **Flujo implementado**:
-  1. Carga credenciales desde `config/secrets.env`.
+  1. Carga credenciales desde `infrastructure/config/secrets.env`.
   2. Genera dump con `mysqldump --databases mediawiki` y lo comprime (`.sql.gz`).
   3. Aplica retención automática (`RETENTION_DAYS`, valor predeterminado 7).
   4. Valida integridad mediante `gzip -t` y reporta en stdout.

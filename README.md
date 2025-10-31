@@ -24,7 +24,7 @@ Consulta la descripción detallada en [ARCHITECTURE.md](ARCHITECTURE.md) y el do
 ```bash
 git clone https://example.org/mediawiki/media-wiki.git
 cd media-wiki
-cp config/variables.ejemplo .env
+cp infrastructure/config/variables.ejemplo .env
 vagrant up
 ./infrastructure/run-all-tests.sh
 ```

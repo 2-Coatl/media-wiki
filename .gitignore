@@ -21,6 +21,9 @@
 **/*.pub
 **/*.ipynb
 
+# Secrets
+infrastructure/config/secrets.env
+
 
 # Visual Studio Code
 .vscode/

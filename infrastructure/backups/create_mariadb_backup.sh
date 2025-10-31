@@ -6,7 +6,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 BACKUP_BASE_DIR="${BACKUP_BASE_DIR:-$PROJECT_ROOT/backups}"
 RETENTION_DAYS="${RETENTION_DAYS:-7}"
@@ -16,9 +16,9 @@ DB_HOST="${DB_HOST:-localhost}"
 mkdir -p "$BACKUP_BASE_DIR"
 
 # Cargar configuración de base de datos y credenciales.
-source "$PROJECT_ROOT/config/20-database.sh"
+source "$PROJECT_ROOT/infrastructure/config/20_database.sh"
 if ! load_db_credentials; then
-  echo "[ERROR] No fue posible cargar credenciales desde config/secrets.env" >&2
+  echo "[ERROR] No fue posible cargar credenciales desde infrastructure/config/secrets.env" >&2
   exit 1
 fi
 
@@ -57,3 +57,4 @@ if [[ "$RETENTION_DAYS" =~ ^[0-9]+$ ]]; then
 else
   echo "[WARN] RETENTION_DAYS debe ser numérico. Se omite purga." >&2
 fi
+

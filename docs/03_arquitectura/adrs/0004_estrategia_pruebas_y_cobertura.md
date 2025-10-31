@@ -23,13 +23,13 @@ offline que ejecute pruebas y calcule cobertura.
 ## Decisión
 
 1. **Framework de pruebas**: Vendorizar la versión estable de `bats-core`
-   (`tests/vendor/bats-core`) para garantizar disponibilidad offline. Las suites se
-   ubicarán en `tests/<dominio>/*.bats` y se ejecutarán mediante el wrapper
-   `bin/test-scripts.sh`.
+   (`infrastructure/tests/vendor/bats-core`) para garantizar disponibilidad offline. Las suites se
+   ubicarán en `infrastructure/tests/<dominio>/*.bats` y se ejecutarán mediante el wrapper
+   `infrastructure/bin/test_scripts.sh`.
 2. **Cobertura**: Utilizar el instrumentador interno `infrastructure/quality/bash-coverage.sh`,
    que intercepta el trap `DEBUG` para registrar líneas ejecutadas y genera reportes
    Cobertura XML y JSON en `reports/coverage/scripts/`. El comando
-   `bin/coverage-scripts.sh` ejecuta primero las suites Bats y luego el
+   `infrastructure/bin/coverage_scripts.sh` ejecuta primero las suites Bats y luego el
    instrumentador para consolidar métricas.
 3. **Política de aceptación**: Todo cambio en scripts debe incluir suites Bats y
    demostrar al menos 80 % de cobertura por módulo. Las pipelines de CI consumirán
@@ -67,6 +67,6 @@ offline que ejecute pruebas y calcule cobertura.
 ## Próximos pasos
 
 1. Añadir `bats-core` vendorizado y actualizar los wrappers de ejecución.
-2. Incorporar `infrastructure/quality/bash-coverage.sh` y `bin/coverage-scripts.sh` al flujo
+2. Incorporar `infrastructure/quality/bash-coverage.sh` y `infrastructure/bin/coverage_scripts.sh` al flujo
    de desarrollo.
 3. Configurar la pipeline de CI para consumir ambos wrappers usando Vagrant.
