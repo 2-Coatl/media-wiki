@@ -15,7 +15,7 @@ Dejar listo el entorno de desarrollo tras la primera ejecución de `vagrant up`,
 2. Corre `infrastructure/validation/validate-network.sh` y confirma que todas las pruebas de conectividad pasan.
 3. Dentro de `mediawiki-web01`, ejecuta `vagrant ssh mediawiki-web01 -c "php -v"` y `vagrant ssh mediawiki-web01 -c "apache2ctl -M"` para verificar que PHP y Apache quedaron instalados.
 4. Sincroniza las colecciones de Postman importando `docs/07_devops/postman/mediawiki_smoke.postman_collection.json` y asigna el entorno `docs/07_devops/postman/mediawiki_vagrant.postman_environment.json`.
-5. Corre `bin/setup-trunk-based` para instalar hooks locales y validar dependencias de CLI básicas (git, vagrant, shellcheck, shfmt).
+5. Corre `infrastructure/bin/setup_trunk_based` para instalar hooks locales y validar dependencias de CLI básicas (git, vagrant, shellcheck, shfmt).
 6. Ejecuta `infrastructure/validation/validate-group-d.sh` y guarda el reporte resultante en el ticket o documento del sprint.
 7. Registra cualquier ajuste extra en la sección **Notas operativas** de este runbook.
 

@@ -10,13 +10,13 @@ la secuencia ejecutada con `DEPLOY_SECURITY_LOG`.
 
 | Orden | Script                    | Propósito resumido                                 | Dependencias clave | Recuperación sugerida |
 |-------|---------------------------|----------------------------------------------------|--------------------|------------------------|
-| 1     | `harden-ssh.sh`           | Endurece `sshd_config` y reinicia el servicio SSH. | `systemctl`, `sshd`| Restaurar respaldo `sshd_config.backup.*` y ejecutar `systemctl restart sshd`. |
-| 2     | `install-fail2ban.sh`     | Instala y habilita Fail2ban con jails básicos.     | `apt-get`, `systemctl`, `fail2ban-client` | Revisar `systemctl status fail2ban`, restaurar `jail.local.backup.*` y relanzar el script. |
-| 3     | `firewall-web.sh`         | Configura UFW para el servidor web.                | `ufw`, `apt-get`   | Consultar `ufw status`, corregir reglas manualmente o ejecutar `ufw --force reset` antes de reintentar. |
-| 4     | `firewall-database.sh`    | Ajusta UFW en la base de datos para restringir MySQL al host web. | `ufw`, `apt-get`, variables de `config/10-network.sh` | Validar `ufw status numbered`, reestablecer reglas con `ufw --force reset` y volver a ejecutar. |
-| 5     | `ssl-certificate.sh`      | Genera certificado y clave autofirmados.           | `openssl`, permisos en `/etc/ssl/` | Verificar archivos en `/etc/ssl/{certs,private}/`, eliminar artefactos inconsistentes y regenerar. |
-| 6     | `apache-ssl.sh`           | Habilita HTTPS en Apache y fuerza redirección HTTP→HTTPS. | `a2enmod`, `a2ensite`, `systemctl`, `curl` | Revisar `apache2ctl configtest`, deshacer cambios con respaldos `mediawiki-ssl.conf.backup.*` y repetir. |
-| 7     | `harden-apache.sh`        | Aplica cabeceras y deshabilita módulos innecesarios. | `a2query`, `a2dismod`, `apache2ctl` | Ejecutar `apache2ctl configtest`, restaurar respaldos en `/etc/apache2/` y reiniciar Apache. |
+| 1     | `harden_ssh.sh`           | Endurece `sshd_config` y reinicia el servicio SSH. | `systemctl`, `sshd`| Restaurar respaldo `sshd_config.backup.*` y ejecutar `systemctl restart sshd`. |
+| 2     | `install_fail2ban.sh`     | Instala y habilita Fail2ban con jails básicos.     | `apt-get`, `systemctl`, `fail2ban-client` | Revisar `systemctl status fail2ban`, restaurar `jail.local.backup.*` y relanzar el script. |
+| 3     | `firewall_web.sh`         | Configura UFW para el servidor web.                | `ufw`, `apt-get`   | Consultar `ufw status`, corregir reglas manualmente o ejecutar `ufw --force reset` antes de reintentar. |
+| 4     | `firewall_database.sh`    | Ajusta UFW en la base de datos para restringir MySQL al host web. | `ufw`, `apt-get`, variables de `infrastructure/config/10_network.sh` | Validar `ufw status numbered`, reestablecer reglas con `ufw --force reset` y volver a ejecutar. |
+| 5     | `ssl_certificate.sh`      | Genera certificado y clave autofirmados.           | `openssl`, permisos en `/etc/ssl/` | Verificar archivos en `/etc/ssl/{certs,private}/`, eliminar artefactos inconsistentes y regenerar. |
+| 6     | `apache_ssl.sh`           | Habilita HTTPS en Apache y fuerza redirección HTTP→HTTPS. | `a2enmod`, `a2ensite`, `systemctl`, `curl` | Revisar `apache2ctl configtest`, deshacer cambios con respaldos `mediawiki-ssl.conf.backup.*` y repetir. |
+| 7     | `harden_apache.sh`        | Aplica cabeceras y deshabilita módulos innecesarios. | `a2query`, `a2dismod`, `apache2ctl` | Ejecutar `apache2ctl configtest`, restaurar respaldos en `/etc/apache2/` y reiniciar Apache. |
 
 ## Dependencias generales
 

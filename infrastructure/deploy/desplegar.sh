@@ -9,13 +9,13 @@ source "$PROJECT_ROOT/infrastructure/utils/core.sh"
 SECURITY_DIR="${DEPLOY_SECURITY_DIR:-$PROJECT_ROOT/infrastructure/security}"
 
 readonly SECURITY_STEPS=(
-  "harden-ssh.sh"
-  "install-fail2ban.sh"
-  "firewall-web.sh"
-  "firewall-database.sh"
-  "ssl-certificate.sh"
-  "apache-ssl.sh"
-  "harden-apache.sh"
+  "harden_ssh.sh"
+  "install_fail2ban.sh"
+  "firewall_web.sh"
+  "firewall_database.sh"
+  "ssl_certificate.sh"
+  "apache_ssl.sh"
+  "harden_apache.sh"
 )
 
 mostrar_ayuda() {

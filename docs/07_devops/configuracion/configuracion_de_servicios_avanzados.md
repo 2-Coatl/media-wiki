@@ -9,12 +9,12 @@ relacionados: [DOC-INDEX-001, DOC-DEVOPS-PLAN-001]
 
 Esta guía consolida las actividades para fortalecer los servicios de la
 plataforma MediaWiki en el laboratorio de producción. Cada apartado documenta
-artefactos en `config/`, `infrastructure/` y verificaciones operativas indispensables
+artefactos en `infrastructure/config/`, `infrastructure/` y verificaciones operativas indispensables
 para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 
 ## 1. Apache HTTP Server
 
-- **Archivos de configuración**: mantener los fragmentos bajo `config/apache/`:
+- **Archivos de configuración**: mantener los fragmentos bajo `infrastructure/config/apache/`:
   - `security-headers.conf` con cabeceras `X-Content-Type-Options`,
     `X-Frame-Options`, `X-XSS-Protection`, `Referrer-Policy` y
     `Permissions-Policy`.
@@ -38,8 +38,8 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 
 ## 2. MariaDB
 
-- **Archivos**: `config/mysql/performance.cnf`, `config/mysql/security.cnf` y
-  `config/mysql/logging.cnf` definen los parámetros de rendimiento, seguridad y
+- **Archivos**: `infrastructure/config/mysql/performance.cnf`, `infrastructure/config/mysql/security.cnf` y
+  `infrastructure/config/mysql/logging.cnf` definen los parámetros de rendimiento, seguridad y
   auditoría.
 - **Script sugerido**: `infrastructure/configuration/configure-mariadb-advanced.sh`.
   Prioriza un respaldo inicial (`backup_mysql_config`), copia las plantillas,
@@ -59,10 +59,10 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 ## 3. SSL/TLS
 
 - **Artefactos**:
-  - Directorio `config/ssl/` para almacenar plantillas de certificados.
+  - Directorio `infrastructure/config/ssl/` para almacenar plantillas de certificados.
   - Script `infrastructure/security/generate-certificates.sh` que crea claves de 4096
     bits, CSR y certificados autofirmados en `/etc/ssl/mediawiki/`.
-  - VirtualHost `config/apache/ssl-vhost.conf` con TLSv1.2+ y HSTS.
+  - VirtualHost `infrastructure/config/apache/ssl-vhost.conf` con TLSv1.2+ y HSTS.
 - **Despliegue automatizado**: `infrastructure/configuration/configure-ssl.sh` habilita
   `mod_ssl`, copia el VirtualHost, aplica redirección permanente de HTTP a HTTPS
   y actualiza `LocalSettings.php` (`$wgServer`, `$wgForceHTTPS`).
@@ -74,12 +74,12 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 
 ## 4. Firewalls en todas las VMs
 
-- **Reglas declarativas** bajo `config/firewall/`:
+- **Reglas declarativas** bajo `infrastructure/config/firewall/`:
   - `web-server.rules` (HTTP/HTTPS abiertos, SSH restringido).
   - `database.rules` (MySQL expuesto solo hacia la red de aplicación).
   - `management.rules` (acceso Nagios y Syslog desde rangos permitidos).
 - **Scripts**:
-  - `infrastructure/security/configure-firewall-web.sh` con UFW (reset, políticas por
+  - `infrastructure/security/configure-firewall_web.sh` con UFW (reset, políticas por
     defecto, reglas para SSH/HTTP/HTTPS y validación `ufw status verbose`).
   - `infrastructure/security/configure-firewall-db.sh` usando `iptables` persistentes
     (`iptables-persistent`).
@@ -91,11 +91,11 @@ para cerrar el bloque de configuración avanzada descrito en el plan maestro.
 ## 5. Fail2ban
 
 - **Archivos base**:
-  - `config/fail2ban/jails.conf` con reglas para `sshd`, `apache-auth`,
+  - `infrastructure/config/fail2ban/jails.conf` con reglas para `sshd`, `apache-auth`,
     `apache-badbots` y jail personalizada de MediaWiki.
-  - `config/fail2ban/filters/mediawiki-auth.conf` para patrones de fallos de
+  - `infrastructure/config/fail2ban/filters/mediawiki-auth.conf` para patrones de fallos de
     autenticación.
-- **Instalación guiada**: `infrastructure/security/install-fail2ban.sh` cubre la
+- **Instalación guiada**: `infrastructure/security/install_fail2ban.sh` cubre la
   instalación, respaldos (`backup_fail2ban_config`), copia de jails/filters,
   habilitación de servicio y pruebas de bloqueo (`test_ban`).
 - **Comprobaciones**:

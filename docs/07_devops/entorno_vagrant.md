@@ -36,7 +36,7 @@ configuraciones antes de ejecutar pruebas funcionales o actividades de soporte.
 ### Scripts y artefactos de apoyo
 - Scripts de validación bajo `infrastructure/validation/` para comprobar conectividad y
   dependencias entre máquinas.
-- Plantillas de configuración compartidas dentro de `config/vagrant/`.
+- Plantillas de configuración compartidas dentro de `infrastructure/config/vagrant/`.
 
 ## Flujo de aprovisionamiento
 1. Ejecuta `vagrant status` en la raíz del repositorio para confirmar que no hay

@@ -20,7 +20,7 @@ Garantizar la continuidad operativa del servicio MediaWiki mediante respaldos co
 3. **Retención**: conservar respaldos de los últimos 7 días (`RETENTION_DAYS` configurable) y purgar automáticamente archivos más antiguos.
 4. **Integridad**: validar cada archivo con `gzip -t` tras su creación (incluido en el script).
 5. **Verificación semanal**: descomprimir el respaldo más reciente y cargarlo en una instancia desechable para validar autenticidad de datos críticos (usuarios y páginas recientes).
-6. **Credenciales**: mantener `config/secrets.env` actualizado y con permisos `600`. Las credenciales deben rotarse trimestralmente o ante sospecha de exposición.
+6. **Credenciales**: mantener `infrastructure/config/secrets.env` actualizado y con permisos `600`. Las credenciales deben rotarse trimestralmente o ante sospecha de exposición.
 7. **Alertamiento**: registrar salidas del script en syslog (`logger`) o en `/var/log/mediawiki-setup/backups.log` y configurar monitoreo que notifique fallas.
 
 ## Procedimiento resumido
@@ -39,5 +39,5 @@ Garantizar la continuidad operativa del servicio MediaWiki mediante respaldos co
 
 ## Riesgos y mitigaciones
 - **Falta de espacio**: monitorear el uso de disco y escalar almacenamiento cuando la ocupación supere 70%.
-- **Credenciales inválidas**: el script aborta con código ≠ 0 si no puede cargar `config/secrets.env`; generar alerta inmediata.
+- **Credenciales inválidas**: el script aborta con código ≠ 0 si no puede cargar `infrastructure/config/secrets.env`; generar alerta inmediata.
 - **Corrupción de archivo**: ante fallo de integridad (`gzip -t`), repetir respaldo inmediatamente y abrir incidente.

@@ -16,7 +16,7 @@ Aceptada
 ## Contexto
 
 Los scripts Bash del repositorio (por ejemplo `infrastructure/quality/ejecutar_validaciones.sh`) deben
-validarse con TDD y mantener un mínimo de 80 % de cobertura. El directorio `tests/`
+validarse con TDD y mantener un mínimo de 80 % de cobertura. El directorio `infrastructure/tests/`
 solo contenía plantillas y no existía una herramienta instalada para ejecutar suites
 `.bats` u obtener estadísticas de cobertura.
 
@@ -28,20 +28,20 @@ scripts propios) que pudieran ejecutarse completamente offline.
 ## Decisión
 
 Adoptar **Bats** como framework principal de pruebas para scripts Bash y vendorizar
-su distribución estable (`tests/vendor/bats-core`) para garantizar disponibilidad
-sin conexión. Las suites residirán en `tests/<dominio>/*.bats` y se ejecutarán con
-el wrapper `bin/test-scripts.sh`, que abstrae la ubicación del vendor.
+su distribución estable (`infrastructure/tests/vendor/bats-core`) para garantizar disponibilidad
+sin conexión. Las suites residirán en `infrastructure/tests/<dominio>/*.bats` y se ejecutarán con
+el wrapper `infrastructure/bin/test_scripts.sh`, que abstrae la ubicación del vendor.
 
 Para la cobertura se implementará un **instrumentador propio en Bash** (`infrastructure/quality/bash-coverage.sh`).
 Este script utiliza el trap `DEBUG` y `BASH_SOURCE` para registrar las líneas
 visitadas mientras se ejecutan los tests Bats. Posteriormente genera reportes en
 formato JSON y Cobertura XML en `reports/coverage/scripts/` sin requerir utilidades
-externas. El wrapper `bin/coverage-scripts.sh` invoca automáticamente el
+externas. El wrapper `infrastructure/bin/coverage_scripts.sh` invoca automáticamente el
 instrumentador después de los tests.
 
 ## Consecuencias
 
-- Existe una suite Bats (`tests/quality/ejecutar_validaciones.bats`) que valida los
+- Existe una suite Bats (`infrastructure/tests/quality/ejecutar_validaciones.bats`) que valida los
   scripts clave y puede ejecutarse con el vendor oficial sin conectividad externa.
 - El flujo de cobertura es reproducible en cualquier VM Vagrant y respeta el objetivo
   de 80 % sin depender de herramientas externas como kcov o bashcov.
@@ -55,7 +55,7 @@ instrumentador después de los tests.
 ### shunit2 como framework principal
 - **Ventajas**: Ligero, depende solo de Bash, sintaxis familiar para equipos
   acostumbrados a xUnit.
-- **Desventajas**: Se requirió mantener un stub (`tests/prototypes/shunit2/shunit2_stub.sh`)
+- **Desventajas**: Se requirió mantener un stub (`infrastructure/tests/prototypes/shunit2/shunit2_stub.sh`)
   para ejecutar las pruebas, duplicando el esfuerzo frente a Bats. Las funciones de
   aserción son menos expresivas para scripts CLI.
 - **Motivo del descarte**: Preferencia del repositorio por Bats (plantillas existentes)
